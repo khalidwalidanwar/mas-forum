@@ -282,7 +282,7 @@
             .then((docSnapshot) => {
                 if (docSnapshot.exists()) {
                     postcomments = docSnapshot.data().comments;
-                    Array.isArray(postcomments[`${Cusername}`])?postcomments[`${Cusername}`].push(newComment):postcomments[`${Cusername}`]=[postcomments[`${Cusername}`],newComment]; 
+                    postcomments[`${Cusername}`]?Array.isArray(postcomments[`${Cusername}`])?postcomments[`${Cusername}`].push(newComment):postcomments[`${Cusername}`]=[postcomments[`${Cusername}`],newComment]:postcomments[`${Cusername}`]=[newComment];
                     // add the comment
                     updateDoc(docRef, {
                         comments: postcomments,
