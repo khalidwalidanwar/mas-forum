@@ -48,23 +48,24 @@ document.querySelector(".askSomeForm button.sendQ").addEventListener("click",(e)
             formData.append("file", file);
             formData.append("upload_preset", uploadPreset);
             // Use Cloudinary API to upload the image
-            newPost.parentElement.classList.add("unload");
             fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-            method: "POST",
-            body: formData,
+                method: "POST",
+                body: formData,
             })
             .then(response => response.json())
             .then(data => {
+                newPost.parentElement.classList.add("unload");
                 newImage = data.secure_url; // URL of the uploaded image
                 adddposts(newPost,showUser,newCategory,newImage);
-            // console.log("File uploaded successfully: ", imageUrl);
-            // Display the uploaded image
-            // imageDisplay.src = imageUrl;
+                // console.log("File uploaded successfully: ", imageUrl);
+                // Display the uploaded image
+                // imageDisplay.src = imageUrl;
             })
             .catch(error => {
-            console.error("Error uploading image: ", error);
+                console.error("Error uploading image: ", error);
             });
         }else{
+            newPost.parentElement.classList.add("unload");
             newImage = '';
             adddposts(newPost,showUser,newCategory,newImage);
         }
