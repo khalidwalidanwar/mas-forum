@@ -145,15 +145,6 @@
 
         try {
             if(document.location.search.substring(4)){
-                if(!document.cookie.includes("userid")){
-                    window.location.href = './';
-                    popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
-                    popUp.style.scale='1';
-                    overlay.style.scale ='1';
-                setTimeout(() => {
-                    window.close();
-                }, 2000);
-            }
             const docRef = doc(db, "posts", document.location.search.substring(4));
             getDoc(docRef)
             .then((query) => {
