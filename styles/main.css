@@ -260,12 +260,12 @@ header{
                 display: flex;
                 gap: 24px;
                 .likes.likedpost{
-                    color: #0044ff;
+                    color: var(--mainG);
                 }
                 .likes{
                     transition: 0.3s;
                     &:hover{
-                        color: #0044ff;
+                        color: var(--mainG);
                     }
                 }
                 div,a{
