@@ -230,6 +230,9 @@
                 popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
                 popUp.style.scale='1';
                 overlay.style.scale ='1';
+            setTimeout(() => {
+                window.close();
+            }, 3000);
             }
         }
         }catch(err){
