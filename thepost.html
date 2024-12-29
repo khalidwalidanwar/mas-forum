@@ -193,28 +193,43 @@
                         <div class="comments" >
                             `;
                             for(var i=0;i < Object.keys(post.comments).length;i++){
+                                if(Array.isArray(Object.values(post.comments)[i])){
+                                    for(var m=0;m<Object.values(post.comments)[i].length;m++){
                                 theHtml+= `
                                 <div class="comment">
                                     <div class="content">
                                         <p class="username">${Object.keys(post.comments)[i]}</p>
                                         <p class="thcomment">`;
-                                            if(Array.isArray(Object.values(post.comments)[i])){
-                                                for(var m=0;m<Object.values(post.comments)[i].length;m++){
                                                 theHtml += Object.values(post.comments)[i][m] +'<br>';
-                                                }
+                                                theHtml+=`</p>
+                                                        <!-- <img src="./gm.jpg"> -->
+                                                    </div>
+                                                    <div class="pic">
+                                                        <div class="icon">
+                                                            <i class="fa-solid fa-user"></i>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                `;
+                                        }
                                             }else{
-                                                theHtml+=Object.values(post.comments)[i];
+                                                theHtml+= `
+                                <div class="comment">
+                                    <div class="content">
+                                        <p class="username">${Object.keys(post.comments)[i]}</p>
+                                        <p class="thcomment">`;
+                                                theHtml += Object.values(post.comments)[i] +'<br>';
+                                                theHtml+=`</p>
+                                                        <!-- <img src="./gm.jpg"> -->
+                                                    </div>
+                                                    <div class="pic">
+                                                        <div class="icon">
+                                                            <i class="fa-solid fa-user"></i>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                `;
                                             }
-                                theHtml+=`</p>
-                                        <!-- <img src="./gm.jpg"> -->
-                                    </div>
-                                    <div class="pic">
-                                        <div class="icon">
-                                            <i class="fa-solid fa-user"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                `;
                             }
                             theHtml +=`
                         </div>
