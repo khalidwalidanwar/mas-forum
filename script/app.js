@@ -275,7 +275,7 @@ const adddposts = async (newPost,showUser,newCategory,newImage)=>{
     try {
         var date = new Date();
         const docRef = await addDoc(collection(db, "posts"), {
-            post: newPost.value,
+            post: newPost.value.replaceAll('\n','<br>'),
             username: showUser ? Cusername : "عضو مجهول",
             userid: cutStringFromLetter(document.cookie,"u").substr(7,20),
             time: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`,
