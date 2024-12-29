@@ -13,6 +13,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const postsDev = document.querySelector(".posts");
 var Cusername;
+var Cuserid = cutStringFromLetter(document.cookie,"u").substr(7,20);
 const popUp = document.querySelector(".popup");
 const overlay = document.querySelector(".overlay");
 if(document.cookie.includes("userid")){
@@ -44,7 +45,7 @@ const fetchYourPosts = async () => {
     var zdiv = document.querySelector(".yourPosts #yyy");
     zdiv.innerHTML ='';
     querySnapshot.forEach((mydoc) => {
-       if(mydoc.data().username == Cusername){
+       if(mydoc.data().userid == Cuserid){
         zdiv.innerHTML+=`
         <div class="post">
             <div class="icon">
@@ -259,10 +260,10 @@ const fetchPosts = async (category) => {
         querySnapshot2.forEach((doc) => {
             var post = doc.data();
             document.querySelector(".latestPosts>div").innerHTML += `
-            <div class="post">
-                <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question "> ${post.post}</p></div>
-                <div><i class="fa-solid fa-circle" ></i> <p class="answer"> ${Object.values(post.comments)[0]?Object.values(post.comments)[0]:"لا توجد اجابة حتي الان "}</p></div>
-            </div>
+            <a style='display:block;' href='./thepost.html?id=${doc.id}' target='_blank' class="post">
+                <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question "> ${truncateParagraph(post.post,6)}</p></div>
+                <div><i class="fa-solid fa-circle" ></i> <p class="answer"> ${Object.values(post.comments)[0]?truncateParagraph(String(Array.isArray(Object.values(post.comments)[0])?Object.values(post.comments)[0][0]:Object.values(post.comments)[0]),10):"لا توجد اجابة حتي الان "}</p></div>
+            </a>
             `;
         });
     }
@@ -382,8 +383,19 @@ document.querySelectorAll(".search div").forEach((div)=>{
         console.log(getTheCategory())
     })
 })
+function truncateParagraph(paragraph, wordLimit) {
+  // Split the paragraph into words
+  const words = paragraph.split(' ');
 
+  // Check if the word count exceeds the limit
+  if (words.length > wordLimit) {
+    // Join only the limited number of words and append "..."
+    return words.slice(0, wordLimit).join(' ') + '......';
+  }
 
+  // If the paragraph is within the limit, return it as is
+  return paragraph;
+}
 
 fetchPosts([]);
 export {fetchPosts,adddposts};
