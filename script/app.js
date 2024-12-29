@@ -178,7 +178,7 @@ const fetchPosts = async (category) => {
                             <p>اعجاب</p>
                         </div>
                         <a class="answers" href="./thepost.html?id=${document.cookie.includes("userid")?mydoc.id:''}" target='_blank'> 
-                            <div class="icon" data-value='${post.comments.length}'>
+                            <div class="icon" data-value='${Object.keys(post.comments).length}'>
                                 <i class="fa-solid fa-comment"></i>
                             </div>
                             <p>الاجابات</p>
@@ -262,7 +262,7 @@ const fetchPosts = async (category) => {
             document.querySelector(".latestPosts>div").innerHTML += `
             <div class="post">
                 <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question "> ${post.post}</p></div>
-                <div><i class="fa-solid fa-circle" ></i> <p class="answer"> ${post.comments[0]?post.comments[post.comments.length - 1]:"لا توجد اجابة حتي الان "}</p></div>
+                <div><i class="fa-solid fa-circle" ></i> <p class="answer"> ${Object.values(post.comments)[0]?Object.values(post.comments)[0]:"لا توجد اجابة حتي الان "}</p></div>
             </div>
             `;
         });
@@ -304,12 +304,13 @@ const addComment = (newComment,comment)=>{
     if(document.cookie.includes("userid")){
         const docRef = doc(db, "posts", `${comment.id}`);
         comment.classList.add("unload");
-        var postcomments = [];
+        var postcomments = {};
         getDoc(docRef)
         .then((docSnapshot) => {
             if (docSnapshot.exists()) {
                 postcomments = docSnapshot.data().comments;
-                postcomments.push(newComment);
+                postcomments[`${Cusername}`]?postcomments[`${Cusername}`].push(newComment):postcomments[`${Cusername}`]=[newComment]; 
+                // postcomments.push(newComment);
                 console.log(postcomments);
                 // add the comment
                 updateDoc(docRef, {
