@@ -115,7 +115,7 @@ const fetchPosts = async (category) => {
                                 </div>
                                 <p>اعجاب</p>
                             </div>
-                            <a class="answers" href="./thepost.html?id=${document.cookie.includes("userid")?doc.id:''}" target='_blank'> 
+                            <a class="answers" href="./thepost.html?id=${doc.id}" target='_blank'> 
                                 <div class="icon" data-value='${Object.values(post.comments).length}'>
                                     <i class="fa-solid fa-comment"></i>
                                 </div>
@@ -177,7 +177,7 @@ const fetchPosts = async (category) => {
                             </div>
                             <p>اعجاب</p>
                         </div>
-                        <a class="answers" href="./thepost.html?id=${document.cookie.includes("userid")?mydoc.id:''}" target='_blank'> 
+                        <a class="answers" href="./thepost.html?id=${mydoc.id}" target='_blank'> 
                             <div class="icon" data-value='${Object.keys(post.comments).length}'>
                                 <i class="fa-solid fa-comment"></i>
                             </div>
