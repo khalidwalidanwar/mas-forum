@@ -66,6 +66,7 @@ document.querySelector(".askSomeForm button.sendQ").addEventListener("click",(e)
             });
         }else{
             newImage = '';
+            adddposts(newPost,showUser,newCategory,newImage);
         }
     }else{
         document.querySelector(".askSomeForm p.error").innerHTML = "من فضلك اختر المادة و اكتب سؤالك";
