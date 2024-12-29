@@ -135,13 +135,24 @@
         const db = getFirestore(app);
         const postsDev = document.querySelector(".posts");
         var Cusername;
-        getDoc(doc(db, "users", cutStringFromLetter(document.cookie,"u").substr(7,20))).then((docSnapshot) => {
-        Cusername = docSnapshot.data().name ;
-        })
+        if(document.cookie.includes("userid")){
+            getDoc(doc(db, "users", cutStringFromLetter(document.cookie,"u").substr(7,20))).then((docSnapshot) => {
+            Cusername = docSnapshot.data().name ;
+            })
+        }
 
 
         try {
             if(document.location.search.substring(4)){
+                if(document.cookie.includes("userid")){
+                    window.location.href = './';
+                    popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
+                    popUp.style.scale='1';
+                    overlay.style.scale ='1';
+                setTimeout(() => {
+                    window.close();
+                }, 2000);
+            }
             const docRef = doc(db, "posts", document.location.search.substring(4));
             getDoc(docRef)
             .then((query) => {
@@ -253,6 +264,7 @@
         }
 
         const addComment = (newComment,comment)=>{
+            if(document.cookie.includes("userid")){
             const docRef = doc(db, "posts", `${comment.id}`);
             comment.classList.add("unload");
             var postcomments = [];
@@ -280,6 +292,11 @@
             .catch((error) => {
                 console.error("Error getting document:", error);
             });
+        }else{
+        popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
+        popUp.style.scale='1';
+        overlay.style.scale ='1';
+        }
             
         }
         function cutStringFromLetter(str, letter) {
