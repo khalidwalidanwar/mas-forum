@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <title>منتدي الطلاب</title>
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Rakkas&family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
+    </head>
+<body dir="rtl">
+    <header>
+        <nav>
+            <div class="container">
+                <div class="logo">
+                    <img src="./gm.jpg" alt="">
+                    <h4>ليدو</h4>
+                </div>
+                <div class="sign" style="display: flex;gap: 10px;">
+                    <a class="btn" href="./login.html" target="_blank">تسجيل دخول</a>
+                    <a class="btn-border" href="./sign-up.html" target="_blank">حساب جديد</a>
+                </div>
+            </div>
+            <a class="a" href="./rules.html" target="_blank"><i class="fa-solid fa-circle-exclamation"></i> قواعد هامة </a>
+    </nav>
+    </header>
+
+
+    <section class="content">
+        <aside>
+        </aside>
+        <div class="posts" >
+            <div class="post" id="firstPost">
+                <div class="user ">
+                    <div class="icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="info">
+                        <p  class="name unload">حجابي سر سعادتي</p>
+                        <p class="detail unload"> متصل الان</p>
+                    </div>
+                </div>
+                <p class="question unload"> هل محلات الجزارة تبيع اللحم ؟ </p>
+                <div class="">
+                    <!-- <img src="gm.jpg" class="img" alt=""> -->
+                </div>
+                <div class="comments" style="height: 0;">
+                    <div class="comment">
+                        <div class="content">
+                            <p class="username">خالد وليد انور</p>
+                            <p class="thcomment">هنشتق الطرفين و نضرب في اتنين</p>
+                            <!-- <img src="./gm.jpg"> -->
+                        </div>
+                        <div class="pic">
+                            <div class="icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div class="content">
+                            <p class="username">خالد وليد انور</p>
+                            <p class="thcomment">هنشتق الطرفين و نضرب في اتنين</p>
+                            <!-- <img src="./gm.jpg"> -->
+                        </div>
+                        <div class="pic">
+                            <div class="icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-nav" > 
+                    <div class="likes unload">
+                        <div class="icon" data-value="6">
+                            <i class="fa-solid fa-thumbs-up"></i>
+                        </div>
+                        <p>اعجاب</p>
+                    </div> 
+                    <div class="answers unload">
+                        <div class="icon" data-value="6">
+                            <i class="fa-solid fa-comment"></i>
+                        </div>
+                        <p>الاجابات</p>
+                    </div>   
+                    <div class="addComment unload">
+                        <textarea cols="30" rows="4" placeholder="اكتب اجابتك........"></textarea>
+                        <button class="sendComment btn" >ارسال</button>
+                    </div>          
+                    <div class="views">
+                        <div class="icon">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside>
+        </aside>
+    </section>
+    <div class="popup">
+        <p>تم ارسال تعليقك بنجاح</p>
+        <button onclick="document.querySelector('.overlay').style.scale='0';this.parentElement.style.scale='0';" class="btn-border">موافق</button>
+    </div>
+    <div class="overlay"></div>
+    <script type="module" module>
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js';
+        import { getFirestore, collection, getDocs, addDoc, serverTimestamp ,deleteDoc,doc,updateDoc,getDoc} from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js';
+        const popUp = document.querySelector(".popup");
+        const overlay = document.querySelector(".overlay");
+        if(document.cookie.includes("userid")){
+            document.querySelector(".sign").innerHTML = `
+            <p class='unload'>اهلا محمد وليد انور</p>
+            <button class="btn-border logout" ><i class="fa-solid fa-right-from-bracket"></i></button>
+            `;
+            document.querySelector(".logout").onclick = ()=>{
+                document.cookie = 'userid' + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                window.location.href = './login.html';
+            }
+        }
+        const firebaseConfig = {
+        apiKey: "AIzaSyCLc3czB1WnDVsJiypj0T1kZLGritXfOx0",
+        authDomain: "lido-8ecd4.firebaseapp.com",
+        projectId: "lido-8ecd4",
+        storageBucket: "lido-8ecd4.firebasestorage.app",
+        messagingSenderId: "546499963720",
+        appId: "1:546499963720:web:e030c1df84c601f606617d",
+        measurementId: "G-KR5C7F1QVT"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const postsDev = document.querySelector(".posts");
+
+        try {
+            if(document.location.search.substring(4)){
+            const docRef = doc(db, "posts", document.location.search.substring(4));
+            getDoc(docRef)
+            .then((query) => {
+                if (query.exists()) {
+                    postsDev.innerHTML ='';
+                    var post = query.data();
+                    const div = document.createElement('div');
+                    var theHtml;
+                    div.className = `post`;
+                    div.id = query.id;
+                    div.setAttribute("userid",post.userid);
+                    theHtml = `
+                        <div class="user ">
+                            <div class="icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="info">
+                                <p  class="name ">${post.username}</p>
+                                <p class="detail "> ${post.time}</p>
+                            </div>
+                            <div class="categorydiv">
+                                <p  class="category ">${post.category}</p>
+                            </div>
+                        </div>
+                        <p class="question "> ${post.post}</p>
+                        <!-- <div class="">
+                            <img src="gm.jpg" class="img" alt="">
+                        </div> -->
+                        <div class="comments" >
+                            `;
+                            for(var i=0;i < post.comments.length;i++){
+                                theHtml+= `
+                                <div class="comment">
+                                    <div class="content">
+                                        <p class="username">خالد وليد انور</p>
+                                        <p class="thcomment">${post.comments[i]}</p>
+                                        <!-- <img src="./gm.jpg"> -->
+                                    </div>
+                                    <div class="pic">
+                                        <div class="icon">
+                                            <i class="fa-solid fa-user"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                `;
+                            }
+                            theHtml +=`
+                        </div>
+                        <div class="post-nav" > 
+                            <div class="addComment">
+                                <textarea cols="30" rows="4" placeholder="اكتب اجابتك........"></textarea>
+                                <button class="sendComment btn" >ارسال</button>
+                            </div> 
+                            <div class="views">
+                                <div class="icon" data-number="${post.views}">
+                                    <i class="fa-solid fa-eye"></i>
+                                </div>
+                            </div>
+                        </div>
+            `;
+            div.innerHTML = theHtml;
+            postsDev.appendChild(div);
+            if(document.cookie.includes("userid")){
+                getDoc(doc(db, "users", cutStringFromLetter(document.cookie,"u").substr(7,20))).then((docSnapshot) => {
+                    document.querySelector(".sign p").innerHTML = `مرحبا ${docSnapshot.data().name}`;
+                    document.querySelector(".sign p").classList.remove("unload");
+                })
+                }
+            document.querySelectorAll(".post .addComment button").forEach((zbutton)=>{
+                zbutton.addEventListener("click",()=>{
+                    var newComment = zbutton.parentElement.querySelector("textarea").value;
+                    var commentId = zbutton.parentElement.parentElement.parentElement;
+                    if(newComment){
+                        addComment(newComment,commentId);
+                    }else{
+                        document.querySelector(".post .addComment textarea").placeholder = "من فضلك اكتب اجابتك اولا";
+                    }
+                })
+            })
+            } else {
+                console.log("No such document!");
+            }
+            })
+            .catch((error) => {
+                console.error("Error getting document:", error);
+            });
+        }else{
+            if(document.cookie.includes("userid")){
+                window.location.href = '/';
+            }else{
+                popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
+                popUp.style.scale='1';
+                overlay.style.scale ='1';
+            }
+        }
+        }catch(err){
+            console.error(err)
+        }
+
+        const addComment = (newComment,comment)=>{
+            const docRef = doc(db, "posts", `${comment.id}`);
+            comment.classList.add("unload");
+            var postcomments = [];
+            // get the post data
+            getDoc(docRef)
+            .then((docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    postcomments = docSnapshot.data().comments;
+                    postcomments.push(newComment);
+                    console.log(postcomments);
+                    // add the comment
+                    updateDoc(docRef, {
+                        comments: postcomments,
+                    }).then(() => {
+                        // comment.style.classList.toggle("unload");
+                        // fetchPosts(document.querySelector(".posts"));
+                        document.location.reload();
+                    }).catch((error) => {
+                        console.error("Error updating document:", error);
+                    });
+                    console.log("Document data:", docSnapshot.data().comments);
+                } else {
+                    console.log("No such document!");
+                }
+            })
+            .catch((error) => {
+                console.error("Error getting document:", error);
+            });
+            
+        }
+        function cutStringFromLetter(str, letter) {
+            const index = str.indexOf(letter); // Find the first occurrence of the letter
+            if (index === -1) {
+                return ""; // If the letter is not found, return an empty string
+            }
+            return str.substring(index); // Extract substring from the found index to the end
+        }
+    </script>
+    
+</body>
+</html>

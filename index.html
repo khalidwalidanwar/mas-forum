@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title>منتدي الطلاب</title>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!-- <link rel="stylesheet" href="./bootstrap-5.3.3/dist/css/bootstrap.min.css"> -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Rakkas&family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Rakkas&family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
 </head>
 <body dir="rtl">
     <header>
@@ -19,12 +19,12 @@
                     <img src="./gm.jpg" alt="">
                     <h4>ليدو</h4>
                 </div>
-                <div style="display: flex;gap: 10px;">
-                    <div class="btn">تسجيل دخول</div>
-                    <div class="btn-border">حساب جديد</div>
+                <div class="sign" style="display: flex;gap: 10px;">
+                    <a class="btn" href="./login.html" target="_blank">تسجيل دخول</a>
+                    <a class="btn-border" href="./sign-up.html" target="_blank">حساب جديد</a>
                 </div>
             </div>
-            <a href="./rules.html" target="_blank"><i class="fa-solid fa-circle-exclamation"></i> قواعد هامة </a>
+            <a class="a" href="./rules.html" target="_blank"><i class="fa-solid fa-circle-exclamation"></i> قواعد هامة </a>
     </nav>
     </header>
 
@@ -33,14 +33,14 @@
             <div class="search">
                 <input type="search" placeholder="هل تبحث عن شئ معين ؟" >
                 <br>
-                <div><input type="checkbox"><p> الجبر وهندسة الفراغية </p></div>
-                <div><input type="checkbox"><p> التفاضل والتكامل </p></div>
-                <div><input type="checkbox"><p> مادة الكيمياء </p></div>
-                <div><input type="checkbox"><p> مادة الاحياء </p></div>
-                <div><input type="checkbox"><p> مادة الفيزياء </p></div>
-                <div><input type="checkbox"><p> مادة اللغة العربية </p></div>
-                <div><input type="checkbox"><p> مادة العلوم المتكاملة </p></div>
-                <div><input type="checkbox"><p> مادة اللغة الاجنبية  </p></div>
+                <div><input type="checkbox" value="مادة اللغة العربية"><p> مادة اللغة العربية </p></div>
+                <div><input type="checkbox" value="مادة اللغة الاجنبية"><p> مادة اللغة الاجنبية  </p></div>
+                <div><input type="checkbox" value="مادة الكيمياء"><p> مادة الكيمياء </p></div>
+                <div><input type="checkbox" value="مادة الفيزياء"><p> مادة الفيزياء </p></div>
+                <div><input type="checkbox" value="مادة الاحياء"><p> مادة الاحياء </p></div>
+                <div><input type="checkbox" value="مادة الجيولوجيا"><p> مادة الجيولوجيا</p></div>
+                <div><input type="checkbox" value="مادة الرياضيات"><p> مادة الرياضيات </p></div>
+                <div><input type="checkbox" value="مادة العلوم المتكاملة"><p> مادة العلوم المتكاملة</p></div>
             </div>
             <div class="latestPosts">
                 <p>أحدث الأسئلة</p>
@@ -64,11 +64,11 @@
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <div class="info">
-                        <p  class="name ">حجابي سر سعادتي</p>
-                        <p class="detail "> متصل الان</p>
+                        <p  class="name unload">حجابي سر سعادتي</p>
+                        <p class="detail unload"> متصل الان</p>
                     </div>
                 </div>
-                <p class="question"> هل محلات الجزارة تبيع اللحم ؟ </p>
+                <p class="question unload"> هل محلات الجزارة تبيع اللحم ؟ </p>
                 <div class="">
                     <!-- <img src="gm.jpg" class="img" alt=""> -->
                 </div>
@@ -99,19 +99,19 @@
                     </div>
                 </div>
                 <div class="post-nav" > 
-                    <div>
+                    <div class="likes unload">
                         <div class="icon" data-value="6">
                             <i class="fa-solid fa-thumbs-up"></i>
                         </div>
                         <p>اعجاب</p>
                     </div> 
-                    <div class="answers">
+                    <div class="answers unload">
                         <div class="icon" data-value="6">
                             <i class="fa-solid fa-comment"></i>
                         </div>
                         <p>الاجابات</p>
                     </div>   
-                    <div class="addComment">
+                    <div class="addComment unload">
                         <textarea cols="30" rows="4" placeholder="اكتب اجابتك........"></textarea>
                         <button class="sendComment btn" >ارسال</button>
                     </div>          
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div class="post">
+            <div class="post" id="secondPost">
                 <div class="user ">
                     <div class="icon">
                         <i class="fa-solid fa-user"></i>
@@ -132,29 +132,53 @@
                         <p class="detail unload"> متصل الان</p>
                     </div>
                 </div>
-                <p class="question unload">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis quidem odio exercitationem debitis aliquam doloremque aperiam laborum adipisci, officia error numquam quasi temporibus sint harum saepe ullam mollitia? Soluta, facilis?</p>
-                <!-- <div class="">
-                    <img src="gm.jpg" class="img" alt="">
-                </div> -->
+                <p class="question unload"> هل محلات الجزارة تبيع اللحم ؟ </p>
+                <div class="">
+                    <!-- <img src="gm.jpg" class="img" alt=""> -->
+                </div>
+                <div class="comments" style="height: 0;">
+                    <div class="comment">
+                        <div class="content">
+                            <p class="username">خالد وليد انور</p>
+                            <p class="thcomment">هنشتق الطرفين و نضرب في اتنين</p>
+                            <!-- <img src="./gm.jpg"> -->
+                        </div>
+                        <div class="pic">
+                            <div class="icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div class="content">
+                            <p class="username">خالد وليد انور</p>
+                            <p class="thcomment">هنشتق الطرفين و نضرب في اتنين</p>
+                            <!-- <img src="./gm.jpg"> -->
+                        </div>
+                        <div class="pic">
+                            <div class="icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="post-nav" > 
-                    <div>
-                        <div class="icon">
+                    <div class="unload">
+                        <div class="icon" data-value="6">
                             <i class="fa-solid fa-thumbs-up"></i>
                         </div>
                         <p>اعجاب</p>
-                    </div>               
-                    <div class="answers">
-                        <div class="icon">
+                    </div> 
+                    <a class="answers unload" href="./thepost.html">
+                        <div class="icon" data-value="6">
                             <i class="fa-solid fa-comment"></i>
                         </div>
                         <p>الاجابات</p>
-                    </div>             
-                    <div>
-                        <div class="icon">
-                            <i class="fa-solid fa-share"></i>
-                        </div>
-                        <p>مشاركة</p>
-                    </div>
+                    </a>   
+                    <div class="addComment unload">
+                        <textarea cols="30" rows="4" placeholder="اكتب اجابتك........"></textarea>
+                        <button class="sendComment btn" >ارسال</button>
+                    </div>          
                     <div class="views">
                         <div class="icon">
                             <i class="fa-solid fa-eye"></i>
@@ -167,14 +191,18 @@
         <aside>
             <div class="yourPosts">
                 <p> أسئلتك</p>
-                <div>
-                    <div class="post">
-                        <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question"> ما هو السؤال الذي سوف نسأله؟</p></div>
-                        <div><i class="fa-solid fa-circle" ></i> <p class="answer"> لا أعرف</p></div>
-                    </div>
-                    <div class="post">
-                        <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question"> ما هو السؤال الذي سوف نسأله؟</p></div>
-                        <div><i class="fa-solid fa-circle" ></i> <p class="answer"> لا أعرف</p></div>
+                <div id="yyy">
+                    <div class="post unload">
+                        <div class="icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="zcontent">
+                            <p class="ques">ما هي طبيعة العالم الافتراضي ؟</p>
+                            <div class="another">
+                                <p class="answers">عدد الاجابات : 5</p>
+                                <button class="removeQues">حذف</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -193,14 +221,14 @@
                 </div>
                 <select name="" id="">
                     <option value="" disabled selected>اختر مادة</option>
-                    <option value="مادة الكيمياء">مادة الكيمياء</option>
-                    <option value="مادة الفيزياء">مادة الفيزياء</option>
                     <option value="مادة اللغة العربية">مادة اللغة العربية</option>
                     <option value="مادة اللغة الانجليزية">مادة اللغة الانجليزية</option>
-                    <option value="مادة العلوم المتكاملة">مادة العلوم المتكاملة</option>
-                    <option value="مادة الرياضات">مادة الرياضات</option>
+                    <option value="مادة الكيمياء">مادة الكيمياء</option>
+                    <option value="مادة الفيزياء">مادة الفيزياء</option>
+                    <option value="مادة الاحياء">مادة الاحياء</option>
                     <option value="مادة الجيولوجيا">مادة الجيولوجيا</option>
-                    <option value="مادة الجيولوجيا">مادة الاحياء</option>
+                    <option value="مادة الرياضيات">مادة الرياضيات</option>
+                    <option value="مادة العلوم المتكاملة">مادة العلوم المتكاملة</option>
                 </select>
             </div>
             <textarea type="text" placeholder="ما هو استفسارك ؟"></textarea>
@@ -210,6 +238,10 @@
             <p class="error"></p>
            
         </div>
+    </div>
+    <div class="popup">
+        <p>تم ارسال تعليقك بنجاح</p>
+        <button onclick="document.querySelector('.overlay').style.scale='0';this.parentElement.style.scale='0';" class="btn-border">موافق</button>
     </div>
     <div class="overlay"></div>
     <script src="script/app.js" type="module" module></script>
