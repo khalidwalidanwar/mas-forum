@@ -116,7 +116,7 @@ const fetchPosts = async (category) => {
                                 <p>اعجاب</p>
                             </div>
                             <a class="answers" href="./thepost.html?id=${document.cookie.includes("userid")?doc.id:''}" target='_blank'> 
-                                <div class="icon" data-value='${post.comments.length}'>
+                                <div class="icon" data-value='${Object.values(post.comments).length}'>
                                     <i class="fa-solid fa-comment"></i>
                                 </div>
                                 <p>الاجابات</p>
