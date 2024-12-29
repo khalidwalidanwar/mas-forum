@@ -1,8 +1,3 @@
-const postsDev = document.querySelector(".posts");
-const postName = document.querySelectorAll(".posts .post .user .name");
-const postDetail = document.querySelectorAll(".posts .post .user .detail");
-const postContent = document.querySelectorAll(".posts .post .question");
-
 
 var askSomeForm = document.querySelector(".askSomeForm");
 var overlay = document.querySelector(".overlay");
@@ -28,11 +23,9 @@ inputFile.onchange=()=>{
 
 
 
-import {fetchPosts,adddposts} from "./app.js";
-fetchPosts(postsDev);
+import {adddposts} from "./app.js";
 
-
-document.querySelector(".askSomeForm button.sendQ").addEventListener("click",()=>{
+document.querySelector(".askSomeForm button.sendQ").addEventListener("click",(e)=>{
     var newPost = document.querySelector(".askSomeForm textarea").value;
     var showUser = document.querySelector(".askSomeForm input[type='checkbox']").checked;
     var newCategory = document.querySelector(".askSomeForm select").value;
