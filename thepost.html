@@ -139,6 +139,7 @@
         if(document.cookie.includes("userid")){
             getDoc(doc(db, "users", cutStringFromLetter(document.cookie,"u").substr(7,20))).then((docSnapshot) => {
             Cusername = docSnapshot.data().name ;
+            
             })
         }
 
@@ -157,16 +158,15 @@
                     }).catch((error) => {
                         console.error("Error updating document:", error);
                     });
-                    console.log("Document data:", docSnapshot.data().comments);
                 }})
         }catch (err){}
 
         try {
             if(document.location.search.substring(4)){
-            const docRef = doc(db, "posts", document.location.search.substring(4));
-            getDoc(docRef)
-            .then((query) => {
-                if (query.exists()) {
+                const docRef = doc(db, "posts", document.location.search.substring(4));
+                getDoc(docRef)
+                .then((query) => {
+                    if (query.exists()) {
                     postsDev.innerHTML ='';
                     var post = query.data();
                     const div = document.createElement('div');
@@ -190,7 +190,7 @@
                         <p class="question "> ${post.post}</p>
                         ${post.image?`<a href='${post.image}' target="_blank" style='text-align:center;display: block;'>
                         <img src="${post.image}" class="img" alt="صورة"></a>`:""}
-                        <div class="comments" style='display:none' >
+                        <div class="comments" >
                             `;
                             for(var i=0;i < Object.keys(post.comments).length;i++){
                                 theHtml+= `
@@ -282,7 +282,7 @@
             .then((docSnapshot) => {
                 if (docSnapshot.exists()) {
                     postcomments = docSnapshot.data().comments;
-                    postcomments[`${Cusername}`]?postcomments[`${Cusername}`].push(newComment):postcomments[`${Cusername}`]=[newComment]; 
+                    Array.isArray(postcomments[`${Cusername}`])?postcomments[`${Cusername}`].push(newComment):postcomments[`${Cusername}`]=[postcomments[`${Cusername}`],newComment]; 
                     // add the comment
                     updateDoc(docRef, {
                         comments: postcomments,
