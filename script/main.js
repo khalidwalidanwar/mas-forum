@@ -14,7 +14,7 @@ document.querySelector(".askSome").onclick = ()=>{
 }
 overlay.onclick = ()=>{
     askSomeForm.style.top = "-100%";
-    // askSomeForm.style.top = "-100%";
+    popup.style.scale = 0;
     overlay.style.scale = 0;
 }
 var inputFile = document.querySelector("#upload");
