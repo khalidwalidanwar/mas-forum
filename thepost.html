@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-        <title>منتدي الطلاب</title>
+        <title>منتدي الطلاب | اجابات السؤال</title>
         <link rel="shortcut icon" href="./gm.jpg" type="image/x-icon">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -142,6 +142,24 @@
             })
         }
 
+        try{
+            const docRef = doc(db, "posts", document.location.search.substring(4));
+            var postViews ;
+            // get the post data
+            getDoc(docRef)
+            .then((docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    postViews = docSnapshot.data().views;
+                    postViews++;
+                    // add the comment
+                    updateDoc(docRef, {
+                        views: postViews,
+                    }).catch((error) => {
+                        console.error("Error updating document:", error);
+                    });
+                    console.log("Document data:", docSnapshot.data().comments);
+                }})
+        }catch (err){}
 
         try {
             if(document.location.search.substring(4)){
@@ -207,7 +225,7 @@
                                 <button class="sendComment btn" >ارسال</button>
                             </div> 
                             <div class="views">
-                                <div class="icon" data-number="${post.views}">
+                                <div class="icon" data-number="${post.views+1}">
                                     <i class="fa-solid fa-eye"></i>
                                 </div>
                             </div>
