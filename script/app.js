@@ -281,7 +281,7 @@ const adddposts = async (newPost,showUser,newCategory,newImage)=>{
             time: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`,
             views: 0,
             likes: 0,
-            comments: [],
+            comments: {},
             category:newCategory,
             image:newImage
         });
