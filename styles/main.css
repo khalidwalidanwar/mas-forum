@@ -146,7 +146,7 @@ header{
             border-radius: 10px;
             position: relative;
             .img{
-                width:100%;
+                max-width: 250px;
                 border-radius: 15px;
             }
             .user{
@@ -446,8 +446,7 @@ header{
                 .icon{
                     color: white;
                     background: #545;
-                    width:70px;
-                    height:30px;
+                    padding: 10px;
                     font-size: 14px;
                     border-radius: 50%;
                     display: flex;
@@ -689,6 +688,7 @@ header{
 .footer {
     background-color: #2c3e50;
     color: #ecf0f1;
+    margin-top: 80px;
     text-align: center;
     padding: 20px 10px;
     position: relative;
