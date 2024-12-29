@@ -320,6 +320,7 @@ const addComment = (newComment,comment)=>{
                     popUp.style.scale='1';
                     overlay.style.scale ='1';
                     fetchPosts([]);
+                    fetchYourPosts();
                 }).catch((error) => {
                     console.error("Error updating document:", error);
                 });
