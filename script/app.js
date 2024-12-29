@@ -144,7 +144,6 @@ const fetchPosts = async (category) => {
             const querySnapshot = await getDocs(collection(db, 'posts'));
             postsDev.innerHTML = "";
             querySnapshot.forEach((mydoc) => {
-                // deleteDoc(doc(db, 'posts',mydoc.id));
                 const post = mydoc.data();
                 const div = document.createElement('div');
                 var theHtml;

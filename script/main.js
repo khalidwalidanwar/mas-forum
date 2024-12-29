@@ -1,12 +1,20 @@
 
 var askSomeForm = document.querySelector(".askSomeForm");
 var overlay = document.querySelector(".overlay");
+var popup = document.querySelector(".popup");
 document.querySelector(".askSome").onclick = ()=>{
+    if(document.cookie.includes("userid")){
     askSomeForm.style.top = "25%";
     overlay.style.scale = 1;
+}else{
+    popup.querySelector("p").innerHTML= 'يلزم تسجيل الدخول اولا';
+    popup.style.scale = 1;
+    overlay.style.scale = 1;
+}
 }
 overlay.onclick = ()=>{
     askSomeForm.style.top = "-100%";
+    // askSomeForm.style.top = "-100%";
     overlay.style.scale = 0;
 }
 var inputFile = document.querySelector("#upload");
