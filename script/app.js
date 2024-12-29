@@ -164,9 +164,8 @@ const fetchPosts = async (category) => {
                         </div>
                     </div>
                     <p class="question "> ${post.post}</p>
-                    <!-- <div class="">
-                        <img src="gm.jpg" class="img" alt="">
-                    </div> -->
+                    ${post.image?`<a href='${post.image}' target="_blank" style='text-align:center;display: block;'>
+                    <img src="${post.image}" class="img" alt="صورة"></a>`:""}
                     <div class="comments" style='display:none' >
                         
                     </div>
@@ -275,7 +274,7 @@ const adddposts = async (newPost,showUser,newCategory,newImage)=>{
     try {
         var date = new Date();
         const docRef = await addDoc(collection(db, "posts"), {
-            post: newPost,
+            post: newPost.value,
             username: showUser ? Cusername : "عضو مجهول",
             userid: cutStringFromLetter(document.cookie,"u").substr(7,20),
             time: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`,
