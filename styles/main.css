@@ -24,7 +24,6 @@ body{
 }
 .btn-border{
     cursor: pointer;
-    
     border: solid 2px var(--mainG);
     color:var(--mainG);
     border-radius: 3px;
@@ -41,10 +40,24 @@ header{
         display: flex;
         justify-content: center;
         border-bottom: 1px solid hsl(210, 8%, 85%);
-        a{
+        .logout{
+            cursor: pointer;
+            border: solid 2px red;
+            background-color: #d30000;
+            font-size: 16px;
+            color: #fff;
+            border-radius: 5px;
+            padding:2px 12px;
+            transition: .2s;
+            &:hover{
+                background-color: darkred;
+                color:white;
+            }   
+        }
+        .a{
             position: absolute;
             top: 10px;
-            left: 20px;
+            right: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -179,14 +192,8 @@ header{
                 color:#444;
                 font-size: 20px;
             }
-            .comments.open{
-                border-width: 1px !important;
-                height: 300px !important;
-                overflow-y: scroll;
-            }
             .comments{
-                height: 0 ;
-                border-width: 0px !important;
+                border-width: 1px !important;
                 transition: 0.6s ;
                 border-top: 1px solid #ddd;
                 margin-top: 10px;
@@ -251,7 +258,16 @@ header{
                 font-weight: bold;
                 display: flex;
                 gap: 24px;
-                div{
+                .likes.likedpost{
+                    color: #0044ff;
+                }
+                .likes{
+                    transition: 0.3s;
+                    &:hover{
+                        color: #0044ff;
+                    }
+                }
+                div,a{
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -407,15 +423,72 @@ header{
         }
         .yourPosts{
             padding: 5px;
-            background-color: #d4d4d4;
             text-align: center;
-            i{
-                display: none;
-            }
+            display: flex;
+            flex-direction: column;
             &>p{
                 font-weight: bold;
+                font-size: 20px;
+                border-bottom: 2px dashed #d4d4d4;
+                padding: 5px;
+                margin-bottom: 10px;
             }
-            
+            .post{
+                padding: 10px;
+                border: 1px solid #d4d4d4;
+                box-shadow: 0 0 5px #d4d4d4;
+                border-radius: 4px;
+                display: flex;
+                /* justify-content: space-between; */
+                align-items: start;
+                gap: 5px;
+                .icon{
+                    color: white;
+                    background: #545;
+                    width:70px;
+                    height:30px;
+                    font-size: 14px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .zcontent{
+                    text-align: right;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: start;
+                    .ques{
+                        font-weight: bold;
+                        font-size: 16px;
+                    }
+                    .another{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 20px;
+                        .answers{
+                            color: var(--mainG);
+                            font-size: 14px;
+                            &:focus{
+                                color: var(--mainG);
+                            }
+                        }
+                        .removeQues{
+                            cursor: pointer;
+                            font-size: 16px;
+                            font-weight: bold;
+                            color: darkred;
+                            border: none;
+                            background-color: transparent;
+                            border-bottom: 1px solid darkred;
+                            border-radius: 5px;
+                            padding:2px 5px;
+                            transition: .2s;
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -501,8 +574,8 @@ header{
 }
 .askSomeForm {
     position: fixed;
-    transition: 0.6s;
-    z-index: 99;
+    transition: 0.3s;
+    z-index: 98;
     top: -100%;
     right: 50%;
     transform: translate(50%,0%);
@@ -578,6 +651,26 @@ header{
         margin: auto;
     }
 }
+.popup{
+    scale: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 25px 50px;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    transition: 0.3s;
+    p{
+        font-size: 20px;
+    }
+}
 .overlay{
     position: fixed;
     top: 0;
@@ -586,7 +679,7 @@ header{
     height: 100vh;
     background-color: #000000ab;
     z-index: 97;
-    transition: 0.6s;
+    transition: 0.3s;
     scale: 0;
 }
 
