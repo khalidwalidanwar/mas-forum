@@ -53,7 +53,7 @@ const fetchYourPosts = async () => {
             <div class="zcontent">
                 <p class="ques">${mydoc.data().post}</p>
                 <div class="another">
-                    <a href='./thepost.html?id=${mydoc.id}' target='_blank' class="answers"><i class="fa-solid fa-up-right-from-square"></i> عدد الاجابات : ${mydoc.data().comments.length}</a>
+                    <a href='./thepost.html?id=${mydoc.id}' target='_blank' class="answers"><i class="fa-solid fa-up-right-from-square"></i> عدد الاجابات : ${Object.values(mydoc.data().comments).length}</a>
                     <button class="removeQues" id="${mydoc.id}">حذف</button>
                 </div>
             </div>
