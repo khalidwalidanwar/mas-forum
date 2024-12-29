@@ -74,7 +74,7 @@
 <body dir="rtl">
     <script>
         if(document.cookie.includes("userid")){
-            window.location.href = '/index.html';
+            window.location.href = './index.html';
         }
     </script>
     <div class="signup-container">
@@ -87,7 +87,7 @@
             <button type="submit">تفعيل الحساب</button>
             <p class="err" style="color: darkred;font-weight: bold;font-size: 18px;text-align: center;"></p>
         </div>
-        <a href="/login.html" class="login-link">لديك حساب مفعل بالفعل ؟  تسجيل دخول</a>
+        <a href="./login.html" class="login-link">لديك حساب مفعل بالفعل ؟  تسجيل دخول</a>
     </div>
 
 <script type="module">
@@ -127,7 +127,7 @@ const cjdslkc =  async () => {
                         password: password.value,
                         name: name.value,
                         }).then(() => {
-                            window.location.href = '/login.html';
+                            window.location.href = './login.html';
                         }).catch((error) => {
                             console.error("Error updating document:", error);
                         });
