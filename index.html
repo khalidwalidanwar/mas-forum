@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منتدي الطلاب</title>
     <link rel="shortcut icon" href="./gm.jpg" type="image/x-icon">
     <link rel="stylesheet" href="styles/main.css">
@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Rakkas&family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
   </head>
 <body dir="rtl">
+    <div class="header"></div>
+    <a class="a" href="./rules.html" target="_blank"><i class="fa-solid fa-circle-exclamation"></i><span> قواعد هامة</span> </a>
     <header>
         <nav>
             <div class="container">
@@ -25,12 +27,17 @@
                     <a class="btn-border" href="./sign-up.html" target="_blank">حساب جديد</a>
                 </div>
             </div>
-            <a class="a" href="./rules.html" target="_blank"><i class="fa-solid fa-circle-exclamation"></i> قواعد هامة </a>
+            
     </nav>
+    <div class="statusing">
+        <i class="fa-solid fa-bars openYourPosts"></i>
+        <p>منتدي طلاب مدرسة المتفوقين الثانوية بنين</p>
+        <i class="fa-solid fa-bars OpenLatestPosts"></i>
+    </div>
     </header>
 
     <section class="content">
-        <aside>
+        <aside class="latest">
             <div class="search">
                 <input type="search" placeholder="هل تبحث عن شئ معين ؟" >
                 <br>
@@ -189,7 +196,7 @@
             </div>
         </div>
 
-        <aside>
+        <aside class="your">
             <div class="yourPosts">
                 <p> أسئلتك</p>
                 <div id="yyy">
