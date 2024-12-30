@@ -103,10 +103,9 @@ const fetchPosts = async (category) => {
                             </div>
                         </div>
                         <p class="question "> ${post.post}</p>
-                        <!-- <div class="">
-                            <img src="gm.jpg" class="img" alt="">
-                        </div> -->
-                        <div class="comments" style='display:none' >
+                    ${post.image?`<a href='${post.image}' target="_blank" style='text-align:center;display: block;'>
+                    <img src="${post.image}" class="img" alt="صورة"></a>`:""}
+                    <div class="comments" style='display:none' >
                             
                         </div>
                         <div class="post-nav" > 
