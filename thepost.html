@@ -251,7 +251,7 @@
                 }
             document.querySelectorAll(".post .addComment button").forEach((zbutton)=>{
                 zbutton.addEventListener("click",()=>{
-                    var newComment = zbutton.parentElement.querySelector("textarea").value;
+                    var newComment = zbutton.parentElement.querySelector("textarea").value.replaceAll("\n","<br>");
                     var commentId = zbutton.parentElement.parentElement.parentElement;
                     if(newComment){
                         addComment(newComment,commentId);
