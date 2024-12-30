@@ -207,65 +207,65 @@ const fetchPosts = async (category) => {
                 }
             })
         })
-        document.querySelectorAll(".post-nav .likes").forEach((div)=>{
-            div.onclick = (e)=>{
-                if(document.cookie.includes("userid")){
-                    var theid = div.parentElement.parentElement.id;
-                    const docRef = doc(db, "posts", theid);
-                    var numOfLikes = 0;
-                    getDoc(docRef)
-                    .then((docSnapshot) => {
-                        if (docSnapshot.exists()) {
-                            numOfLikes = docSnapshot.data().likes;
-                            // add the comment
-                            var numberDiv = div.querySelector(".icon");
-                            if(div.classList.contains("likedpost")){
-                                div.classList.remove("likedpost");
-                                numberDiv.setAttribute("data-value",parseInt(numberDiv.getAttribute("data-value"))-1);
-                                numOfLikes -=1;
-                                updateDoc(docRef, {
-                                    likes: numOfLikes,
-                                }).catch((error) => {console.error("Error updating document:", error)});
-                            }else{
-                                div.classList.add("likedpost");
-                                numberDiv.setAttribute("data-value",parseInt(numberDiv.getAttribute("data-value"))+1);
-                                numOfLikes +=1;
-                                updateDoc(docRef, {
-                                    likes: numOfLikes,
-                                }).catch((error) => {console.error("Error updating document:", error)});
-                            }
-                            
-                        } else {
-                            console.log("No such document!");
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error getting document:", error);
-                    });
-                }else{
-                    popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
-                    popUp.style.scale='1';
-                    overlay.style.scale ='1';
-                }
-            }
-        })
-      } catch (error) {
+    } catch (error) {
         console.error(error.message);
-      }
-        const colRef2 = collection(db, "posts"); // Replace with your collection name
-        const q = query(colRef2, limit(5)); // Add the limit to fetch only 3 documents
-        const querySnapshot2 = await getDocs(q);
-        document.querySelector(".latestPosts>div").innerHTML = '';
-        querySnapshot2.forEach((doc) => {
-            var post = doc.data();
-            document.querySelector(".latestPosts>div").innerHTML += `
-            <a style='display:block;' href='./thepost.html?id=${doc.id}' target='_blank' class="post">
-                <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question "> ${truncateParagraph(post.post,6)}</p></div>
-                <div><i class="fa-solid fa-circle" ></i> <p class="answer"> ${Object.values(post.comments)[0]?truncateParagraph(String(Array.isArray(Object.values(post.comments)[0])?Object.values(post.comments)[0][0]:Object.values(post.comments)[0]),10):"لا توجد اجابة حتي الان "}</p></div>
-            </a>
-            `;
-        });
     }
+    const colRef2 = collection(db, "posts"); // Replace with your collection name
+    const q = query(colRef2, limit(5)); // Add the limit to fetch only 3 documents
+    const querySnapshot2 = await getDocs(q);
+    document.querySelector(".latestPosts>div").innerHTML = '';
+    querySnapshot2.forEach((doc) => {
+        var post = doc.data();
+        document.querySelector(".latestPosts>div").innerHTML += `
+        <a style='display:block;' href='./thepost.html?id=${doc.id}' target='_blank' class="post">
+        <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question "> ${truncateParagraph(post.post,6)}</p></div>
+        <div><i class="fa-solid fa-circle" ></i> <p class="answer"> ${Object.values(post.comments)[0]?truncateParagraph(String(Array.isArray(Object.values(post.comments)[0])?Object.values(post.comments)[0][0]:Object.values(post.comments)[0]),10):"لا توجد اجابة حتي الان "}</p></div>
+        </a>
+        `;
+    });
+}
+document.querySelectorAll(".post-nav .likes").forEach((div)=>{
+    div.onclick = (e)=>{
+        if(document.cookie.includes("userid")){
+            var theid = div.parentElement.parentElement.id;
+            const docRef = doc(db, "posts", theid);
+            var numOfLikes = 0;
+            getDoc(docRef)
+            .then((docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    numOfLikes = docSnapshot.data().likes;
+                    // add the comment
+                    var numberDiv = div.querySelector(".icon");
+                    if(div.classList.contains("likedpost")){
+                        div.classList.remove("likedpost");
+                        numberDiv.setAttribute("data-value",parseInt(numberDiv.getAttribute("data-value"))-1);
+                        numOfLikes -=1;
+                        updateDoc(docRef, {
+                            likes: numOfLikes,
+                        }).catch((error) => {console.error("Error updating document:", error)});
+                    }else{
+                        div.classList.add("likedpost");
+                        numberDiv.setAttribute("data-value",parseInt(numberDiv.getAttribute("data-value"))+1);
+                        numOfLikes +=1;
+                        updateDoc(docRef, {
+                            likes: numOfLikes,
+                        }).catch((error) => {console.error("Error updating document:", error)});
+                    }
+                    
+                } else {
+                    console.log("No such document!");
+                }
+            })
+            .catch((error) => {
+                console.error("Error getting document:", error);
+            });
+        }else{
+            popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
+            popUp.style.scale='1';
+            overlay.style.scale ='1';
+        }
+    }
+})
     
 }
 
