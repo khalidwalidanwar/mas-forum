@@ -2,6 +2,11 @@
 var askSomeForm = document.querySelector(".askSomeForm");
 var overlay = document.querySelector(".overlay");
 var popup = document.querySelector(".popup");
+var latestbar = document.querySelector(".content .latest");
+var latesti = document.querySelector(".OpenLatestPosts");
+var yourbar = document.querySelector(".content .your");
+var youri = document.querySelector(".openYourPosts");
+
 document.querySelector(".askSome").onclick = ()=>{
     if(document.cookie.includes("userid")){
     askSomeForm.style.top = "25%";
@@ -16,6 +21,8 @@ overlay.onclick = ()=>{
     askSomeForm.style.top = "-100%";
     popup.style.scale = 0;
     overlay.style.scale = 0;
+    latestbar.style.right = '-100%';
+    yourbar.style.left = '-100%';
 }
 var inputFile = document.querySelector("#fileInput");
 var filename = document.querySelector(".filename");
@@ -73,3 +80,33 @@ document.querySelector(".askSomeForm button.sendQ").addEventListener("click",(e)
         document.querySelector(".askSomeForm p.error").innerHTML = "من فضلك اختر المادة و اكتب سؤالك";
     }
 })
+
+var ztext = ' مرحبا بكم في منتدي طلاب مدرسة المتفوقين الثانوية بنين';
+var index = 0;
+var textContainer = document.querySelector(".statusing p");
+textContainer.textContent = '';
+function typeText() {
+    if (index < ztext.length) {
+      textContainer.textContent += ztext[index];
+      index++;
+      setTimeout(typeText, 100); // التحكم في سرعة الكتابة (100ms لكل حرف)
+    }else{
+        setTimeout(() => {
+            textContainer.textContent = '';
+            index =0;
+            textContainer.textContent += ztext[index];
+            index++;
+            setTimeout(typeText, 100); // التحكم في سرعة الكتابة (100ms لكل حرف)
+        }, 2000);
+    }
+}
+typeText();
+
+youri.onclick = ()=>{
+    latestbar.style.right = '0';
+    overlay.style.scale = '1';
+}
+latesti.onclick = ()=>{
+    yourbar.style.left = '0';
+    overlay.style.scale = '1';
+}
