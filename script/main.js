@@ -50,6 +50,7 @@ document.querySelector(".askSomeForm button.sendQ").addEventListener("click",(e)
     const cloudName = "dfochp65f"; // Replace with your Cloudinary cloud name
     const uploadPreset = "my-upload-preset"; // Replace with your upload preset (configured in Cloudinary)
         if (fileInput.files.length > 0) {
+            newPost.parentElement.classList.add("unload");
             const file = fileInput.files[0];
             const formData = new FormData();
             formData.append("file", file);
@@ -61,7 +62,6 @@ document.querySelector(".askSomeForm button.sendQ").addEventListener("click",(e)
             })
             .then(response => response.json())
             .then(data => {
-                newPost.parentElement.classList.add("unload");
                 newImage = data.secure_url; // URL of the uploaded image
                 adddposts(newPost,showUser,newCategory,newImage);
                 // console.log("File uploaded successfully: ", imageUrl);
