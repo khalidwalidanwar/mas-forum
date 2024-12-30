@@ -196,17 +196,6 @@ const fetchPosts = async (category) => {
           div.innerHTML = theHtml;
           postsDev.appendChild(div);
         })
-        document.querySelectorAll(".post .addComment button").forEach((zbutton)=>{
-            zbutton.addEventListener("click",()=>{
-                var newComment = zbutton.parentElement.querySelector("textarea").value.replaceAll("\n","<br>");
-                var commentId = zbutton.parentElement.parentElement.parentElement;
-                if(newComment){
-                    addComment(newComment,commentId);
-                }else{
-                    document.querySelector(".post .addComment textarea").placeholder = "من فضلك اكتب اجابتك اولا";
-                }
-            })
-        })
     } catch (error) {
         console.error(error.message);
     }
@@ -224,6 +213,17 @@ const fetchPosts = async (category) => {
         `;
     });
 }
+document.querySelectorAll(".post .addComment button").forEach((zbutton)=>{
+    zbutton.addEventListener("click",()=>{
+        var newComment = zbutton.parentElement.querySelector("textarea").value.replaceAll("\n","<br>");
+        var commentId = zbutton.parentElement.parentElement.parentElement;
+        if(newComment){
+            addComment(newComment,commentId);
+        }else{
+            document.querySelector(".post .addComment textarea").placeholder = "من فضلك اكتب اجابتك اولا";
+        }
+    })
+})
 document.querySelectorAll(".post-nav .likes").forEach((div)=>{
     div.onclick = (e)=>{
         if(document.cookie.includes("userid")){
@@ -398,4 +398,3 @@ function truncateParagraph(paragraph, wordLimit) {
 
 fetchPosts([]);
 export {fetchPosts,adddposts};
-
