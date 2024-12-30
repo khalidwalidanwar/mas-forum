@@ -35,9 +35,55 @@ body{
         color:white;
     }               
 }
+.header{
+    height: 75px;
+    width: 100%;
+}
+.statusing{
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    text-align: center;
+    background-color: #fcfcfc;
+    margin-top: -5px;
+    text-align: center;
+    border-top: 1px solid #eee;
+    i{
+        display: none;
+        cursor: pointer;
+    }
+    p{
+        width: 100%;
+    }
+}
+.a{
+    z-index: 9999;
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    i{
+        padding: 5px;
+        color: #a2ad00;
+        cursor: pointer;
+        font-size: 30px;
+    }
+}
 header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
     nav{
-        position: relative;
+        padding-bottom: 15px !important;
         display: flex;
         justify-content: center;
         border-bottom: 1px solid hsl(210, 8%, 85%);
@@ -55,23 +101,7 @@ header{
                 color:white;
             }   
         }
-        .a{
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-            i{
-                padding: 5px;
-                color: #a2ad00;
-                cursor: pointer;
-                font-size: 30px;
-            }
-        }
+        
         .container{
             display: flex;
             justify-content: space-between;
@@ -250,7 +280,7 @@ header{
             .post-nav{
                 border-top: 1px solid #b4b4b494;
                 padding-top: 20px;
-                padding-right: 20px;
+                padding-right: 0;
                 margin-top: 10px;
                 margin-right: 18px;
                 display: flex;
@@ -263,6 +293,7 @@ header{
                     color: var(--mainG);
                 }
                 .likes{
+                    margin-right: 20px;
                     transition: 0.3s;
                     &:hover{
                         color: var(--mainG);
@@ -576,7 +607,7 @@ header{
 .askSomeForm {
     position: fixed;
     transition: 0.3s;
-    z-index: 98;
+    z-index: 1000;
     top: -100%;
     right: 50%;
     transform: translate(50%,0%);
@@ -661,7 +692,7 @@ header{
     background-color: #eee;
     border-radius: 5px;
     padding: 25px 50px;
-    z-index: 99;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -680,7 +711,7 @@ header{
     width: 100vw;
     height: 100vh;
     background-color: #000000ab;
-    z-index: 97;
+    z-index: 999;
     transition: 0.8s;
 }
 
@@ -732,7 +763,83 @@ header{
     transform: scale(1.2);
   }
   
-
+  @media (min-width: 0px) and (max-width: 992px) {
+    .header{
+        height: 110px;
+    }
+    .content .posts {
+        width: 100%;
+        align-items: center;
+        .post{
+            width: 100%;
+        }
+    }
+    .a{
+        top: unset;
+        bottom: 10px;
+        span{
+            display: none;
+        }
+        
+    }
+    header {
+        & nav {
+            .container {
+                width: 100%;
+                .sign p{
+                    max-width: 120px;
+                }
+            }
+        }
+    }
+    .post-nav{
+        padding-right: 0px;
+        flex-wrap: wrap;
+        padding-right: 0;
+        .likes {
+            margin-right: 20px;
+        }
+    }
+    aside.latest{
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100%;
+        padding: 10px;
+        padding-top: 50px;
+        z-index: 9999;
+        background-color: #eee;
+        overflow-y: scroll;
+        transition: 0.4s
+    }
+    aside.your{
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        padding: 10px;
+        padding-top: 50px;
+        z-index: 9999;
+        background-color: #eee;
+        overflow-y: scroll;
+        transition: 0.4s
+    }
+    .statusing{
+        display: flex;
+        i{
+            display: block;
+            padding: 5px;
+            background-color: #eee;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        p{
+            font-size: 13px;
+            height: 30px;
+            overflow: hidden;
+        }
+    }
+  }
 
 @keyframes anime {
     0%{
@@ -745,3 +852,22 @@ header{
         left:500px;
     }
 }
+body::-webkit-scrollbar,aside::-webkit-scrollbar,textarea::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+    background-color: #f1f1f1; /* Background color of the scrollbar */
+  }
+  
+  body::-webkit-scrollbar-thumb,aside::-webkit-scrollbar-thumb,textarea::-webkit-scrollbar-thumb {
+    background-color: var(--mainG); /* Color of the scrollbar thumb */
+    border-radius: 6px; /* Rounded edges for the thumb */
+    border: 3px solid #f1f1f1; /* Space between thumb and track */
+  }
+  
+  body::-webkit-scrollbar-thumb:hover,aside::-webkit-scrollbar-thumb:hover,textarea::-webkit-scrollbar-thumb:hover {
+    background-color: var(--mainG); /* Color when hovering over the scrollbar */
+  }
+  
+  /* Scrollbar corner for elements with scroll in both directions */
+  body::-webkit-scrollbar-corner,aside::-webkit-scrollbar-corner,textarea::-webkit-scrollbar-corner {
+    background-color: #f1f1f1; /* Match the track background */
+  }
