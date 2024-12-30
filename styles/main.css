@@ -839,6 +839,9 @@ header{
             overflow: hidden;
         }
     }
+    .askSomeForm{
+        width: 85%;
+    }
   }
 
 @keyframes anime {
