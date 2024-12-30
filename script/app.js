@@ -198,7 +198,7 @@ const fetchPosts = async (category) => {
         })
         document.querySelectorAll(".post .addComment button").forEach((zbutton)=>{
             zbutton.addEventListener("click",()=>{
-                var newComment = zbutton.parentElement.querySelector("textarea").value;
+                var newComment = zbutton.parentElement.querySelector("textarea").value.replaceAll("\n","<br>");
                 var commentId = zbutton.parentElement.parentElement.parentElement;
                 if(newComment){
                     addComment(newComment,commentId);
@@ -308,7 +308,7 @@ const addComment = (newComment,comment)=>{
         .then((docSnapshot) => {
             if (docSnapshot.exists()) {
                 postcomments = docSnapshot.data().comments;
-                postcomments[`${Cusername}`]?postcomments[`${Cusername}`].push(newComment):postcomments[`${Cusername}`]=[newComment]; 
+                postcomments[`${Cusername}`]?Array.isArray(postcomments[`${Cusername}`])?postcomments[`${Cusername}`].push(newComment):postcomments[`${Cusername}`]=[postcomments[`${Cusername}`],newComment]:postcomments[`${Cusername}`]=[newComment];
                 // postcomments.push(newComment);
                 console.log(postcomments);
                 // add the comment
