@@ -132,6 +132,7 @@
         const db = getFirestore(app);
         const postsDev = document.querySelector(".posts");
         var Cusername;
+        var Cuserid = cutStringFromLetter(document.cookie,"u").substr(7,20);
         if(document.cookie.includes("userid")){
             getDoc(doc(db, "users", cutStringFromLetter(document.cookie,"u").substr(7,20))).then((docSnapshot) => {
             Cusername = docSnapshot.data().name ;
@@ -147,7 +148,7 @@
             .then((docSnapshot) => {
                 if (docSnapshot.exists()) {
                     postViews = docSnapshot.data().views;
-                    postViews++;
+                    postViews.includes(Cuserid)?"":postViews.push(Cuserid);
                     // add the comment
                     updateDoc(docRef, {
                         views: postViews,
@@ -235,7 +236,7 @@
                                 <button class="sendComment btn" >ارسال</button>
                             </div> 
                             <div class="views">
-                                <div class="icon" data-number="${post.views+1}">
+                                <div class="icon" data-number="${post.views.length}">
                                     <i class="fa-solid fa-eye"></i>
                                 </div>
                             </div>
