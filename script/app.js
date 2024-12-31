@@ -126,7 +126,7 @@ const fetchPosts = async (category) => {
                                 <button class="sendComment btn" >ارسال</button>
                             </div> 
                             <div class="views">
-                                <div class="icon" data-number="${post.views}">
+                                <div class="icon" data-number="${post.views.length}">
                                     <i class="fa-solid fa-eye"></i>
                                 </div>
                             </div>
@@ -187,7 +187,7 @@ const fetchPosts = async (category) => {
                             <button class="sendComment btn" >ارسال</button>
                         </div> 
                         <div class="views">
-                            <div class="icon" data-number="${post.views}">
+                            <div class="icon" data-number="${post.views.length}">
                                 <i class="fa-solid fa-eye"></i>
                             </div>
                         </div>
