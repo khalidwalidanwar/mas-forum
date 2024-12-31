@@ -76,7 +76,7 @@ const fetchPosts = async (category) => {
     if(category.length > 0){
         try{
             const colRef = collection(db, "posts"); // Replace "posts" with your collection name
-            postsDev.innerHTML = '<p class="post nonono unload">لا توجد منشورات حتي الان</p>';
+            postsDev.innerHTML = '<p class="post nonono unload">لا توجد أسئلة في هذة المادة حتي الان</p>';
             for(var n=0 ; n<=category.length;n++){
                 const q = query(colRef, where("category", "==", category[n])); // Specify the condition
                 const querySnapshot = await getDocs(q);
@@ -137,6 +137,7 @@ const fetchPosts = async (category) => {
                 });
             }
         }catch(err){
+            postsDev.querySelector("p.post.nonono").classList.remove("unload");
             console.error(err)
         }
     }else{
