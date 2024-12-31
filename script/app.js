@@ -279,8 +279,8 @@ const adddposts = async (newPost,showUser,newCategory,newImage)=>{
             username: showUser ? Cusername : "عضو مجهول",
             userid: cutStringFromLetter(document.cookie,"u").substr(7,20),
             time: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`,
-            views: 0,
-            likes: 0,
+            views: [],
+            likes: [],
             comments: {},
             category:newCategory,
             image:newImage
