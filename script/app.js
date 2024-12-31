@@ -170,8 +170,8 @@ const fetchPosts = async (category) => {
                         
                     </div>
                     <div class="post-nav" > 
-                        <div class='likes'>
-                            <div class="icon" data-value='${post.likes}'>
+                        <div class='likes ${post.likes.includes(Cuserid)?"likedpost":""}'>
+                            <div class="icon" data-value='${post.likes.length}'>
                                 <i class="fa-solid fa-thumbs-up"></i>
                             </div>
                             <p>اعجاب</p>
@@ -229,7 +229,7 @@ document.querySelectorAll(".post-nav .likes").forEach((div)=>{
         if(document.cookie.includes("userid")){
             var theid = div.parentElement.parentElement.id;
             const docRef = doc(db, "posts", theid);
-            var numOfLikes = 0;
+            var numOfLikes = [];
             getDoc(docRef)
             .then((docSnapshot) => {
                 if (docSnapshot.exists()) {
@@ -239,14 +239,14 @@ document.querySelectorAll(".post-nav .likes").forEach((div)=>{
                     if(div.classList.contains("likedpost")){
                         div.classList.remove("likedpost");
                         numberDiv.setAttribute("data-value",parseInt(numberDiv.getAttribute("data-value"))-1);
-                        numOfLikes -=1;
+                        numOfLikes.splice(numOfLikes.indexOf(Cuserid));
                         updateDoc(docRef, {
                             likes: numOfLikes,
                         }).catch((error) => {console.error("Error updating document:", error)});
                     }else{
                         div.classList.add("likedpost");
                         numberDiv.setAttribute("data-value",parseInt(numberDiv.getAttribute("data-value"))+1);
-                        numOfLikes +=1;
+                        numOfLikes.push(Cuserid);
                         updateDoc(docRef, {
                             likes: numOfLikes,
                         }).catch((error) => {console.error("Error updating document:", error)});
