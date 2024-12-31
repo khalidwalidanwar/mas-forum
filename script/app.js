@@ -109,12 +109,12 @@ const fetchPosts = async (category) => {
                             
                         </div>
                         <div class="post-nav" > 
-                            <div class='likes'>
-                                <div class="icon" data-value='${post.likes}'>
-                                    <i class="fa-solid fa-thumbs-up"></i>
-                                </div>
-                                <p>اعجاب</p>
+                        <div class='likes ${post.likes.includes(Cuserid)?"likedpost":""}'>
+                        <div class="icon" data-value='${post.likes.length}'>
+                                <i class="fa-solid fa-thumbs-up"></i>
                             </div>
+                            <p>اعجاب</p>
+                        </div>
                             <a class="answers" href="./thepost.html?id=${doc.id}" target='_blank'> 
                                 <div class="icon" data-value='${Object.values(post.comments).length}'>
                                     <i class="fa-solid fa-comment"></i>
