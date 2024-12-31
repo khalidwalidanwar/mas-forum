@@ -295,9 +295,7 @@ header{
                 .likes{
                     margin-right: 20px;
                     transition: 0.3s;
-                    &:hover{
-                        color: var(--mainG);
-                    }
+                    
                 }
                 div,a{
                     display: flex;
