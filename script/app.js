@@ -208,8 +208,8 @@ const fetchPosts = async (category) => {
         var post = doc.data();
         document.querySelector(".latestPosts>div").innerHTML += `
         <a style='display:block;' href='./thepost.html?id=${doc.id}' target='_blank' class="post">
-        <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question "> ${truncateParagraph(post.post,6)}</p></div>
-        <div><i class="fa-solid fa-circle" ></i> <p class="answer"> ${Object.values(post.comments)[0]?truncateParagraph(String(Array.isArray(Object.values(post.comments)[0])?Object.values(post.comments)[0][0]:Object.values(post.comments)[0]),10):"لا توجد اجابة حتي الان "}</p></div>
+        <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question "> ${truncateParagraph(post.post,6,"yes")}</p></div>
+        <div><i class="fa-solid fa-circle" ></i> <p class="answer"> ${Object.values(post.comments)[0]?truncateParagraph(String(Array.isArray(Object.values(post.comments)[0])?Object.values(post.comments)[0][0]:Object.values(post.comments)[0]),10,"no"):"لا توجد اجابة حتي الان "}</p></div>
         </a>
         `;
     });
@@ -218,10 +218,14 @@ document.querySelectorAll(".post .addComment button").forEach((zbutton)=>{
     zbutton.addEventListener("click",()=>{
         var newComment = zbutton.parentElement.querySelector("textarea").value.replaceAll("\n","<br>");
         var commentId = zbutton.parentElement.parentElement.parentElement;
-        if(newComment){
-            addComment(newComment,commentId);
+        if(document.cookie.includes("userid")){
+            if(newComment){
+                addComment(newComment,commentId);
+            }else{
+                document.querySelector(".post .addComment textarea").placeholder = "من فضلك اكتب اجابتك اولا";
+            }
         }else{
-            document.querySelector(".post .addComment textarea").placeholder = "من فضلك اكتب اجابتك اولا";
+            popitup("يلزم تسجيل الدخول اولا")
         }
     })
 })
@@ -261,9 +265,7 @@ document.querySelectorAll(".post-nav .likes").forEach((div)=>{
                 console.error("Error getting document:", error);
             });
         }else{
-            popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
-            popUp.style.scale='1';
-            overlay.style.scale ='1';
+            popitup("يلزم تسجيل الدخول اولا")
         }
     }
 })
@@ -290,14 +292,10 @@ const adddposts = async (newPost,showUser,newCategory,newImage)=>{
         console.error("Error adding document: ", e);
       }
     }else{
-        popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
-        popUp.style.scale='1';
-        overlay.style.scale ='1';
+        popitup("يلزم تسجيل الدخول اولا")
         document.querySelector(".askSomeForm").style.top ='-100%';
     }
 }
-
-
 
 const addComment = (newComment,comment)=>{
     // get the post data
@@ -317,9 +315,7 @@ const addComment = (newComment,comment)=>{
                     comments: postcomments,
                 }).then(() => {
                     // comment.style.classList.toggle("unload");
-                    popUp.querySelector("p").innerHTML = 'تم ارسال اجابتك بنجاح';
-                    popUp.style.scale='1';
-                    overlay.style.scale ='1';
+                    popitup('تم ارسال اجابتك بنجاح');
                     fetchPosts([]);
                     fetchYourPosts();
                 }).catch((error) => {
@@ -334,20 +330,17 @@ const addComment = (newComment,comment)=>{
             console.error("Error getting document:", error);
         });
     }else{
-        popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
-        popUp.style.scale='1';
-        overlay.style.scale ='1';
+        popitup("يلزم تسجيل الدخول اولا")
     }
     
 }
+
 const deletePost = async (e)=>{
     const postId = e.id;
     try{
         await deleteDoc(doc(db, 'posts',postId));
         e.parentElement.parentElement.parentElement.remove();
-        popUp.querySelector("p").innerHTML = 'تم حذف سؤالك بنجاح';
-        popUp.style.scale='1';
-        overlay.style.scale ='1';
+        popitup('تم حذف سؤالك بنجاح')
         fetchPosts([]);
     }catch (err) {
         console.error(err)
@@ -358,7 +351,6 @@ const logout = ()=>{
     document.cookie = 'userid' + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.href = './login.html';
 }
-
 
 function cutStringFromLetter(str, letter) {
     const index = str.indexOf(letter); // Find the first occurrence of the letter
@@ -380,22 +372,26 @@ function getTheCategory(){
 document.querySelectorAll(".search div").forEach((div)=>{
     div.querySelector("input").addEventListener("click",()=>{
         fetchPosts(getTheCategory());
-        console.log(getTheCategory())
     })
 })
-function truncateParagraph(paragraph, wordLimit) {
+function truncateParagraph(paragraph, wordLimit,check) {
   // Split the paragraph into words
   const words = paragraph.split(' ');
 
   // Check if the word count exceeds the limit
   if (words.length > wordLimit) {
     // Join only the limited number of words and append "..."
-    return words.slice(0, wordLimit).join(' ') + '......';
+    return check=="yes"?words.slice(0, wordLimit).join(' ') + '....؟':words.slice(0, wordLimit).join(' ') + '......';
   }
 
   // If the paragraph is within the limit, return it as is
   return paragraph;
 }
+function popitup(massege){
+    popUp.querySelector("p").innerHTML = massege;
+    popUp.style.scale='1';
+    overlay.style.display = 'block';
+}
 
 fetchPosts([]);
-export {fetchPosts,adddposts};
+export {fetchPosts,adddposts,popitup};
