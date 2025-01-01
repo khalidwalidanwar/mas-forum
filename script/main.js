@@ -10,17 +10,17 @@ var youri = document.querySelector(".openYourPosts");
 document.querySelector(".askSome").onclick = ()=>{
     if(document.cookie.includes("userid")){
     askSomeForm.style.top = "25%";
-    overlay.style.scale = 1;
+    overlay.style.display = 'block';
 }else{
     popup.querySelector("p").innerHTML= 'يلزم تسجيل الدخول اولا';
     popup.style.scale = 1;
-    overlay.style.scale = 1;
+    overlay.style.display = 'block';
 }
 }
 overlay.onclick = ()=>{
     askSomeForm.style.top = "-100%";
     popup.style.scale = 0;
-    overlay.style.scale = 0;
+    overlay.style.display = 'none';
     latestbar.style.right = '-100%';
     yourbar.style.left = '-100%';
 }
@@ -38,7 +38,7 @@ inputFile.onchange=()=>{
 
 
 
-import {adddposts} from "./app.js";
+import {adddposts,popitup} from "./app.js";
 
 document.querySelector(".askSomeForm button.sendQ").addEventListener("click",(e)=>{
     var newPost = document.querySelector(".askSomeForm textarea");
@@ -104,9 +104,9 @@ typeText();
 
 youri.onclick = ()=>{
     latestbar.style.right = '0';
-    overlay.style.scale = '1';
+    overlay.style.display = 'block';
 }
 latesti.onclick = ()=>{
     yourbar.style.left = '0';
-    overlay.style.scale = '1';
+    overlay.style.display = 'block';
 }
