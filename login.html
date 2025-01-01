@@ -70,7 +70,49 @@
         .login-container .forgot-password:hover {
             text-decoration: underline;
         }
-
+        .popup{
+    scale: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 25px 50px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    transition: 0.3s;
+    p{
+        font-size: 20px;
+    }
+}
+.overlay{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000ab;
+    z-index: 999;
+    transition: 0.8s;
+}
+.btn-border{
+    cursor: pointer;
+    border: solid 2px #00af5d;
+    color:var(--mainG);
+    border-radius: 3px;
+    padding:3px 8px;
+    transition: .2s;
+    &:hover{
+        background: #00af5d;
+        color:white;
+    }               
+}
         @media (min-width: 0px) and (max-width: 992px) {
             .login-container{
                 margin: auto;
@@ -97,6 +139,11 @@
         <a href="#" class="forgot-password">نسيت كلمة المرور ؟</a>
         <a href="./sign-up.html" class="forgot-password">تفعيل حساب</a>
     </div>
+    <div class="popup">
+        <p>يلزم تسجيل الدخول اولا</p>
+        <button onclick="window.location.href='https://api.whatsapp.com/send/?phone=201027467022&text&type=phone_number&app_absent=0';document.querySelector('.overlay').style.display='none';this.parentElement.style.scale='0';" class="btn-border">تواصل</button>
+    </div>
+    <div class="overlay"></div>
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js';
         import { getFirestore, collection, getDocs, addDoc, serverTimestamp ,deleteDoc,doc,updateDoc,getDoc} from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js';        
@@ -137,7 +184,7 @@
                             }else{
                                 theerr.innerHTML = "هذا الحساب غير مفعل<br> سيتم تحويلك لصفحة تفغيل الحساب خلال 5 ثواني";
                                 setTimeout(() => {
-                                    window.location.href = './sign-up.html';
+                                    window.location.href = '/sign-up.html';
                                 }, 5000);
                             }
                         }else{
@@ -159,6 +206,15 @@
                 return ""; // If the letter is not found, return an empty string
             }
             return str.substring(index); // Extract substring from the found index to the end
+        }
+        document.querySelector(".forgot-password").onclick=()=>{
+            document.querySelector(".popup p").innerHTML = "تواصل مع مكتب الاتحاد";
+            document.querySelector(".popup").style.scale='1';
+            document.querySelector('.overlay').style.display = 'block';
+        }
+        document.querySelector('.overlay').onclick=()=>{
+            document.querySelector(".popup").style.scale='0';
+            document.querySelector('.overlay').style.display = 'none';
         }
     </script>
 </body>
