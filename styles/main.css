@@ -437,6 +437,7 @@ header{
                 background-color: #ddd;
                 text-align: right;
                 .quse{
+                    text-decoration: underline;
                     color: rgb(0, 113, 219) ;
                 }
                 div{
@@ -702,7 +703,7 @@ header{
     }
 }
 .overlay{
-    scale: 0;
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
