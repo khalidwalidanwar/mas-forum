@@ -143,8 +143,9 @@ const fetchPosts = async (category) => {
     }else{
         try {
             const querySnapshot = await getDocs(collection(db, 'posts'));
-            postsDev.innerHTML = "";
+            postsDev.innerHTML = '<p class="post nonono" style="color:darkred;font-weight:bold">من فضلك تحقق من اتصال الانترنت و اعد المحاولة</p>';
             querySnapshot.forEach((mydoc) => {
+                document.querySelector(".nonono")?document.querySelector(".nonono").remove():"";
                 const post = mydoc.data();
                 const div = document.createElement('div');
                 var theHtml;
