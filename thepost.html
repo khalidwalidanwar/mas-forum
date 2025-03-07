@@ -11,6 +11,23 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Rakkas&family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
+    <style>
+        .previewImage{
+                position: relative;
+            span{
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: #fff;
+                background-color: darkred;
+                font-size: 15px;
+                border-radius: 3px;
+                text-align: center;
+                width: 28px;
+                height: 28px;
+            }
+        }
+    </style>
     </head>
 <body dir="rtl">
     <div class="header"></div>
@@ -132,6 +149,7 @@
         const db = getFirestore(app);
         const postsDev = document.querySelector(".posts");
         var Cusername;
+        var theCommentToChange;
         var Cuserid = cutStringFromLetter(document.cookie,"u").substr(7,20);
         if(document.cookie.includes("userid")){
             getDoc(doc(db, "users", cutStringFromLetter(document.cookie,"u").substr(7,20))).then((docSnapshot) => {
@@ -196,10 +214,22 @@
                                 <div class="comment">
                                     <div class="content">
                                         <p class="username">${Object.keys(post.comments)[i]}</p>
-                                        <p class="thcomment">`;
-                                                theHtml += Object.values(post.comments)[i][m] +'<br>';
+                                        `;
+                                        if(Object.values(post.comments)[i][m][0][1]){
+                                            theHtml+=`<p onclick='window.location.href="${Object.values(post.comments)[i][m][0][1]}"'><img src="${Object.values(post.comments)[i][m][0][1]}"></p>`;
+                                        }
+                                        theHtml+=`<div>
+                                            <p class="thcomment">`;
+                                                theHtml += Object.values(post.comments)[i][m][0][0] +'<br>';
                                                 theHtml+=`</p>
-                                                        <!-- <img src="./gm.jpg"> -->
+                                                    ${Object.keys(post.comments)[i]==Cusername?
+                                                    `<div class="actions">
+                                                        <button class='btn-border edit'>تعديل</button>
+                                                        <button class='btn update' style='display:none;font-size:14px;font-weight:bold;margin-left: -5px;border:solid 2px var(--mainG)'><i class="fa-solid fa-check"></i></button>
+                                                        <button class='btn-border close' style='display:none;font-size:14px;font-weight:bold'><i class="fa-solid fa-circle-xmark"></i></button>
+                                                        <button class='del'>حذف</button>
+                                                    </div>`:""}
+                                                </div>
                                                     </div>
                                                     <div class="pic">
                                                         <div class="icon">
@@ -215,9 +245,9 @@
                                     <div class="content">
                                         <p class="username">${Object.keys(post.comments)[i]}</p>
                                         <p class="thcomment">`;
-                                                theHtml += Object.values(post.comments)[i] +'<br>';
+                                                theHtml += Object.values(post.comments)[i][0][0] +'<br>';
                                                 theHtml+=`</p>
-                                                        <!-- <img src="./gm.jpg"> -->
+                                                        <img src="./gm.jpg">
                                                     </div>
                                                     <div class="pic">
                                                         <div class="icon">
@@ -230,9 +260,12 @@
                             }
                             theHtml +=`
                         </div>
-                        <div class="post-nav" > 
+                        <div class="post-nav" style="flex-direction:column;gap:0" > 
+                            <div class="previewImage" style="max-width: 100%;display: none;background:#eee"><span><i class="fa-solid fa-xmark"></i></span><img id="preview" style="max-width: 25%;"></div>
                             <div class="addComment">
                                 <textarea cols="30" rows="4" placeholder="اكتب اجابتك........"></textarea>
+                                <input type="file" name="" id="fileInput" style="display: none;" accept="image/*">
+                                <button class="attachPhoto btn" ><i class="fa-solid fa-paperclip"></i></button>
                                 <button class="sendComment btn" >ارسال</button>
                             </div> 
                             <div class="views">
@@ -244,6 +277,32 @@
             `;
             div.innerHTML = theHtml;
             postsDev.appendChild(div);
+            document.querySelectorAll(".comment .actions .del").forEach((e)=>{
+                e.addEventListener("click",()=>{delZcomment(e.parentElement.parentElement)})
+            })  
+            document.querySelectorAll(".comment .actions .edit").forEach((e)=>{
+                e.addEventListener("click",()=>{editZcomment(e.parentElement.parentElement)})
+            })  
+            document.querySelectorAll(".attachPhoto").forEach((e)=>{
+                e.addEventListener("click",()=>{e.parentElement.querySelector("#fileInput").click();})
+            })  
+            document.querySelectorAll("#fileInput").forEach((e)=>{
+                e.addEventListener("change",(o)=>{previewImage(o)})
+            })  
+            document.querySelectorAll(".previewImage span").forEach((e)=>{
+                e.addEventListener("click",(o)=>{e.parentElement.style.display='none';e.parentElement.parentElement.querySelector("#fileInput").value = null;})
+            })  
+            document.querySelectorAll(".comment .actions .update").forEach((e)=>{
+                e.addEventListener("click",()=>{updateZcomment(e.parentElement.parentElement)})
+            })  
+            document.querySelectorAll(".comment .actions .close").forEach((e)=>{
+                e.addEventListener("click",()=>{
+                    e.parentElement.querySelector(".edit").style.display = 'block';
+                    e.parentElement.querySelector(".update").style.display = 'none';
+                    e.style.display = 'none';
+                    e.parentElement.parentElement.querySelector("p.thcomment").innerHTML = e.parentElement.parentElement.querySelector("input").value;
+                })
+            })  
             if(document.cookie.includes("userid")){
                 getDoc(doc(db, "users", cutStringFromLetter(document.cookie,"u").substr(7,20))).then((docSnapshot) => {
                     document.querySelector(".sign p").innerHTML = `مرحبا ${docSnapshot.data().name}`;
@@ -252,12 +311,15 @@
                 }
             document.querySelectorAll(".post .addComment button").forEach((zbutton)=>{
                 zbutton.addEventListener("click",()=>{
-                    var newComment = zbutton.parentElement.querySelector("textarea").value.replaceAll("\n","<br>");
-                    var commentId = zbutton.parentElement.parentElement.parentElement;
-                    if(newComment){
-                        addComment(newComment,commentId);
-                    }else{
-                        document.querySelector(".post .addComment textarea").placeholder = "من فضلك اكتب اجابتك اولا";
+                    if(zbutton.classList.contains("sendComment")){
+                        var newComment = zbutton.parentElement.querySelector("textarea").value.replaceAll("\n","<br>");
+                        var commentId = zbutton.parentElement.parentElement.parentElement;
+                        var commentImg = zbutton.parentElement.querySelector("input");
+                        if(newComment){
+                            addComment(newComment,commentId,commentImg);
+                        }else{
+                            document.querySelector(".post .addComment textarea").placeholder = "من فضلك اكتب اجابتك اولا";
+                        }
                     }
                 })
             })
@@ -284,42 +346,187 @@
             console.error(err)
         }
 
-        const addComment = (newComment,comment)=>{
-            if(document.cookie.includes("userid")){
-            const docRef = doc(db, "posts", `${comment.id}`);
-            comment.classList.add("unload");
-            var postcomments = [];
-            // get the post data
-            getDoc(docRef)
-            .then((docSnapshot) => {
-                if (docSnapshot.exists()) {
-                    postcomments = docSnapshot.data().comments;
-                    postcomments[`${Cusername}`]?Array.isArray(postcomments[`${Cusername}`])?postcomments[`${Cusername}`].push(newComment):postcomments[`${Cusername}`]=[postcomments[`${Cusername}`],newComment]:postcomments[`${Cusername}`]=[newComment];
-                    // add the comment
+        const previewImage= (e)=>{
+            let file = e.target.files[0]; // Get the selected file
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let img = document.querySelector('.previewImage img');
+                    img.src = e.target.result; // Set image source
+                    img.parentElement.style.display = 'block'; // Show the image
+                };
+                reader.readAsDataURL(file); // Convert file to base64 URL
+            }
+        }
+        const addComment = (newComment,comment,commentImg)=>{
+            const cloudName = "dfochp65f"; // Replace with your Cloudinary cloud name
+            const uploadPreset = "my-upload-preset"; // Replace with your upload preset (configured in Cloudinary)
+            var newImage;
+            if (commentImg.files.length > 0) {
+                const file = commentImg.files[0];
+                const formData = new FormData();
+                    formData.append("file", file);
+                    formData.append("upload_preset", uploadPreset);
+                    // Use Cloudinary API to upload the image
+                    fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                        method: "POST",
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        newImage = data.secure_url; // URL of the uploaded image
+                        if(document.cookie.includes("userid")){
+                            const docRef = doc(db, "posts", `${comment.id}`);
+                            comment.classList.add("unload");
+                            var postcomments = [];
+                            // get the post data
+                            getDoc(docRef)
+                            .then((docSnapshot) => {
+                                if (docSnapshot.exists()) {
+                                    postcomments = docSnapshot.data().comments;
+                                    if(postcomments[`${Cusername}`]){
+                                        if(Array.isArray(postcomments[`${Cusername}`])){
+                                            postcomments[`${Cusername}`].push({0:[newComment,newImage]});
+                                        }else{
+                                            postcomments[`${Cusername}`]=[postcomments[`${Cusername}`],{0:[newComment,newImage]}]
+                                        }
+                                    }else{
+                                        postcomments[`${Cusername}`]={0:[newComment,newImage]};
+                                    }
+                                    document.querySelector(".post").classList.add("unload");
+                                    // add the comment
+                                    updateDoc(docRef, {
+                                        comments: postcomments,
+                                    }).then(() => {
+                                        document.location.reload();
+                                    }).catch((error) => {
+                                        console.error("Error updating document:", error);
+                                    });
+                                } else {
+                                    console.log("No such document!");
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("Error getting document:", error);
+                            });
+                        }else{
+                        popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
+                        popUp.style.scale='1';
+                        overlay.style.scale ='1';
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error uploading image: ", error);
+                    });
+                }else{
+                    newImage = '';
+                    if(document.cookie.includes("userid")){
+                            const docRef = doc(db, "posts", `${comment.id}`);
+                            comment.classList.add("unload");
+                            var postcomments = [];
+                            // get the post data
+                            getDoc(docRef)
+                            .then((docSnapshot) => {
+                                if (docSnapshot.exists()) {
+                                    postcomments = docSnapshot.data().comments;
+                                    if(postcomments[`${Cusername}`]){
+                                        if(Array.isArray(postcomments[`${Cusername}`])){
+                                            postcomments[`${Cusername}`].push({0:[newComment,newImage]});
+                                        }else{
+                                            postcomments[`${Cusername}`]=[postcomments[`${Cusername}`],{0:[newComment,newImage]}]
+                                        }
+                                    }else{
+                                        postcomments[`${Cusername}`]={0:[newComment,newImage]};
+                                    }
+                                    document.querySelector(".post").classList.add("unload");
+                                    // add the comment
+                                    updateDoc(docRef, {
+                                        comments: postcomments,
+                                    }).then(() => {
+                                        document.location.reload();
+                                    }).catch((error) => {
+                                        console.error("Error updating document:", error);
+                                    });
+                                } else {
+                                    console.log("No such document!");
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("Error getting document:", error);
+                            });
+                        }else{
+                        popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
+                        popUp.style.scale='1';
+                        overlay.style.scale ='1';
+                        }
+                    // adddposts(newPost,showUser,newCategory,newImage);
+                }
+                // ____________________________________________________________
+        }
+
+        function editZcomment(e){
+            var input = document.createElement("input");
+            input.type = "text";
+            input.className='input';
+            input.value = e.querySelector(".thcomment").textContent;
+            theCommentToChange = e.querySelector(".thcomment").textContent;
+            e.querySelector(".thcomment").innerHTML = '';
+            e.querySelector(".thcomment").appendChild(input);
+            e.querySelector(".actions .edit").style.display = 'none';
+            e.querySelector(".actions .update").style.display = 'block';
+            e.querySelector(".actions .close").style.display = 'block';
+        }
+        function updateZcomment(e){
+            try{
+                const docRef = doc(db, "posts", document.location.search.substring(4));
+                var postcomments;
+                var theNewComment = e.querySelector("input").value;
+                // get the post data
+                getDoc(docRef)
+                .then((docSnapshot) => {
+                    if (docSnapshot.exists()) {
+                        postcomments = docSnapshot.data().comments;
+                        for(var m=0;m<postcomments[Cusername].length;m++){
+                            if(postcomments[Cusername][m][0][0]==theCommentToChange){
+                                postcomments[Cusername][m][0][0] = theNewComment;
+                                e.querySelector(".close").click();
+                            }
+                        }
                     updateDoc(docRef, {
                         comments: postcomments,
-                    }).then(() => {
-                        // comment.style.classList.toggle("unload");
-                        // fetchPosts(document.querySelector(".posts"));
-                        document.location.reload();
                     }).catch((error) => {
                         console.error("Error updating document:", error);
                     });
-                    console.log("Document data:", docSnapshot.data().comments);
-                } else {
-                    console.log("No such document!");
-                }
-            })
-            .catch((error) => {
-                console.error("Error getting document:", error);
-            });
-        }else{
-        popUp.querySelector("p").innerHTML = 'يلزم تسجيل الدخول اولا';
-        popUp.style.scale='1';
-        overlay.style.scale ='1';
+                }})
+            }catch (err){}
         }
-            
+        function delZcomment(e){
+            var theComment= e.querySelector(".thcomment").innerHTML.slice(0,-4);
+            try{
+                const docRef = doc(db, "posts", document.location.search.substring(4));
+                var postcomments ;
+                var theindex;
+                // get the post data
+                getDoc(docRef)
+                .then((docSnapshot) => {
+                    if (docSnapshot.exists()) {
+                        postcomments = docSnapshot.data().comments;
+                        if(postcomments[Cusername].length > 1){
+                            theindex = postcomments[Cusername].indexOf(theComment);
+                            postcomments[Cusername].splice(theindex,1);
+                        }else{
+                            delete postcomments[Cusername];
+                        }
+                        e.parentElement.parentElement.remove();
+                    updateDoc(docRef, {
+                        comments: postcomments,
+                    }).catch((error) => {
+                        console.error("Error updating document:", error);
+                    });
+                }})
+            }catch (err){}
         }
+
         function cutStringFromLetter(str, letter) {
             const index = str.indexOf(letter); // Find the first occurrence of the letter
             if (index === -1) {
