@@ -373,6 +373,7 @@
             const cloudName = "dfochp65f"; // Replace with your Cloudinary cloud name
             const uploadPreset = "my-upload-preset"; // Replace with your upload preset (configured in Cloudinary)
             var newImage;
+            comment.classList.add("unload");
             if (commentImg.files.length > 0) {
                 const file = commentImg.files[0];
                 const formData = new FormData();
@@ -388,7 +389,6 @@
                         newImage = data.secure_url; // URL of the uploaded image
                         if(document.cookie.includes("userid")){
                             const docRef = doc(db, "posts", `${comment.id}`);
-                            comment.classList.add("unload");
                             var postcomments = [];
                             // get the post data
                             getDoc(docRef)
@@ -497,9 +497,13 @@
                 .then((docSnapshot) => {
                     if (docSnapshot.exists()) {
                         postcomments = docSnapshot.data().comments;
-                        for(var m=0;m<postcomments[Cusername].length;m++){
+                        for(var m=0;m<Object.keys(postcomments[Cusername]).length;m++){
                             if(postcomments[Cusername][m][0][0]==theCommentToChange){
                                 postcomments[Cusername][m][0][0] = theNewComment;
+                                e.querySelector(".close").click();
+                            }
+                            if(postcomments[Cusername][m][0]==theCommentToChange){
+                                postcomments[Cusername][m][0] = theNewComment;
                                 e.querySelector(".close").click();
                             }
                         }
