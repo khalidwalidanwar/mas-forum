@@ -244,11 +244,22 @@
                                 <div class="comment">
                                     <div class="content">
                                         <p class="username">${Object.keys(post.comments)[i]}</p>
-                                        <p class="thcomment">`;
+                                        `;
+                                        if(Object.values(post.comments)[i][0][1]){
+                                            theHtml+=`<p onclick='window.location.href="${Object.values(post.comments)[i][0][1]}"'><img src="${Object.values(post.comments)[i][0][1]}"></p>`;
+                                        }
+                                        theHtml+=`<div>
+                                            <p class="thcomment">`;
                                                 theHtml += Object.values(post.comments)[i][0][0] +'<br>';
                                                 theHtml+=`</p>
-                                                        <img src="./gm.jpg">
-                                                    </div>
+                                                ${Object.keys(post.comments)[i]==Cusername?
+                                                    `<div class="actions">
+                                                        <button class='btn-border edit'>تعديل</button>
+                                                        <button class='btn update' style='display:none;font-size:14px;font-weight:bold;margin-left: -5px;border:solid 2px var(--mainG)'><i class="fa-solid fa-check"></i></button>
+                                                        <button class='btn-border close' style='display:none;font-size:14px;font-weight:bold'><i class="fa-solid fa-circle-xmark"></i></button>
+                                                        <button class='del'>حذف</button>
+                                                    </div>`:""}
+                                                    </div></div>
                                                     <div class="pic">
                                                         <div class="icon">
                                                             <i class="fa-solid fa-user"></i>
