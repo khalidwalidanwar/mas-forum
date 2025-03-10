@@ -144,13 +144,21 @@ const fetchPosts = async (category) => {
         try {
             const querySnapshot = await getDocs(collection(db, 'posts'));
             postsDev.innerHTML = '<p class="post nonono" style="color:darkred;font-weight:bold">من فضلك تحقق من اتصال الانترنت و اعد المحاولة</p>';
+            var posts=[];
             querySnapshot.forEach((mydoc) => {
+                var post = (mydoc.data());
+                post['id'] = mydoc.id; 
+                posts.push(post);
+            })
+            console.log(posts);
+            posts.sort((a, b) => b.likes.length - a.likes.length);
+            for(var x=0;x<posts.length;x++){
                 document.querySelector(".nonono")?document.querySelector(".nonono").remove():"";
-                const post = mydoc.data();
+                const post =posts[x];
                 const div = document.createElement('div');
                 var theHtml;
                 div.className = `post`;
-                div.id = mydoc.id;
+                div.id = post.id;
                 div.setAttribute("userid",post.userid);
                 theHtml = `
                     <div class="user ">
@@ -178,7 +186,7 @@ const fetchPosts = async (category) => {
                             </div>
                             <p>اعجاب</p>
                         </div>
-                        <a class="answers" href="./thepost.html?id=${mydoc.id}" target='_blank'> 
+                        <a class="answers" href="./thepost.html?id=${post.id}" target='_blank'> 
                             <div class="icon" data-value='${Object.keys(post.comments).length}'>
                                 <i class="fa-solid fa-comment"></i>
                             </div>
@@ -194,10 +202,10 @@ const fetchPosts = async (category) => {
                             </div>
                         </div>
                     </div>
-        `;
-        div.innerHTML = theHtml;
-        postsDev.appendChild(div);
-        })
+                    `;
+                    div.innerHTML = theHtml;
+                    postsDev.appendChild(div);
+            }
     } catch (error) {
         console.error(error.message);
     }
@@ -267,6 +275,7 @@ document.querySelectorAll(".post-nav .likes").forEach((div)=>{
                             likes: numOfLikes,
                         }).catch((error) => {console.error("Error updating document:", error)});
                     }
+                    fetchPosts([]);
                     
                 } else {
                     console.log("No such document!");
