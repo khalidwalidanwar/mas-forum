@@ -194,9 +194,9 @@ const fetchPosts = async (category) => {
                             </div>
                         </div>
                     </div>
-          `;
-          div.innerHTML = theHtml;
-          postsDev.appendChild(div);
+        `;
+        div.innerHTML = theHtml;
+        postsDev.appendChild(div);
         })
     } catch (error) {
         console.error(error.message);
@@ -205,15 +205,25 @@ const fetchPosts = async (category) => {
     const q = query(colRef2, limit(5)); // Add the limit to fetch only 3 documents
     const querySnapshot2 = await getDocs(q);
     document.querySelector(".latestPosts>div").innerHTML = '';
+    var context="";
     querySnapshot2.forEach((doc) => {
         var post = doc.data();
-        document.querySelector(".latestPosts>div").innerHTML += `
+        context += `
         <a style='display:block;' href='./thepost.html?id=${doc.id}' target='_blank' class="post">
         <div class="quse"><i class="fa-solid fa-square" ></i> <p class="question "> ${truncateParagraph(post.post,6,"yes")}</p></div>
-        <div><i class="fa-solid fa-circle" ></i> <p class="answer"> ${Object.values(post.comments)[0]?truncateParagraph(String(Array.isArray(Object.values(post.comments)[0])?Object.values(post.comments)[0][0]:Object.values(post.comments)[0]),10,"no"):"لا توجد اجابة حتي الان "}</p></div>
-        </a>
-        `;
+        <div><i class="fa-solid fa-circle" ></i> <p class="answer">`;
+        // ${Object.values(post.comments)[0]?truncateParagraph(String(Array.isArray(Object.values(post.comments)[0])?Object.values(post.comments)[0][0]:Object.values(post.comments)[0]),10,"no"):"لا توجد اجابة حتي الان "}</p></div>
+        if(Object.values(post.comments)[0]){
+            if(Array.isArray(Object.values(post.comments)[0][0][0])){
+                context += truncateParagraph(Object.values(post.comments)[0][0][0][0],10,"no") + "</p></div></a>";
+            }else{
+                context += truncateParagraph(Object.values(post.comments)[0][0][0],10,"no") + "</p></div></a>";
+            }
+        }else{
+            context+="لا توجد اجابة حتي الان" + "</p></div></a>";
+        }
     });
+    document.querySelector(".latestPosts>div").innerHTML = context;
 }
 document.querySelectorAll(".post .addComment button").forEach((zbutton)=>{
     zbutton.addEventListener("click",()=>{
@@ -308,9 +318,16 @@ const addComment = (newComment,comment)=>{
         .then((docSnapshot) => {
             if (docSnapshot.exists()) {
                 postcomments = docSnapshot.data().comments;
-                postcomments[`${Cusername}`]?Array.isArray(postcomments[`${Cusername}`])?postcomments[`${Cusername}`].push(newComment):postcomments[`${Cusername}`]=[postcomments[`${Cusername}`],newComment]:postcomments[`${Cusername}`]=[newComment];
+                if(postcomments[`${Cusername}`]){
+                    if(Array.isArray(postcomments[`${Cusername}`])){
+                        postcomments[`${Cusername}`].push({0:[newComment,""]});
+                    }else{
+                        postcomments[`${Cusername}`]=[postcomments[`${Cusername}`],{0:[newComment,""]}]
+                    }
+                }else{
+                    postcomments[`${Cusername}`]={0:[newComment,""]};
+                }
                 // postcomments.push(newComment);
-                console.log(postcomments);
                 // add the comment
                 updateDoc(docRef, {
                     comments: postcomments,
